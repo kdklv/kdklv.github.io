@@ -1,5 +1,6 @@
 (function ($) {
 
+
     // Matter.js module aliases
     var Engine = Matter.Engine,
         World = Matter.World,
@@ -22,8 +23,8 @@
         _mouseConstraint,
         _sceneEvents = [];
     var _world = _engine.world;
-    var width = 800;
-    var height = 600;
+    var width = 1200;
+    var height = 900;
     _mouseConstraint = MouseConstraint.create(_engine);
 
     World.add(_engine.world, _mouseConstraint);
@@ -124,14 +125,14 @@
                 pointA : {x:pos.x1,y:pos.y1},
                 bodyB : body,
                 pointB : Vector.rotate({x:-bsize[0]/2,y:-bsize[1]/2},body.angle),
-                render: {visible: false},
+                render: {visible: true},
                 stiffness:.7
             }));
             Composite.addConstraint(composite,Constraint.create({
                 pointA : {x:pos.x2,y:pos.y2},
                 bodyB : body,
                 pointB : Vector.rotate({x:bsize[0]/2,y:bsize[1]/2},body.angle),
-                render: {visible: false},
+                render: {visible: true},
                 stiffness:.7
             }))
         }

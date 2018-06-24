@@ -1,13 +1,12 @@
          body { margin: 0;
            font-family: 'IBM Plex Sans', sans-serif;
-
-         background: #333
+         background: #222
          }
             .menu {
                 position: absolute;
 
                 top: 0;
-                left: 30vw;
+                left: 500px;
             }
             .menu a {
                 color: #fff;
