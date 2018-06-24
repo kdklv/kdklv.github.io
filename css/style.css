@@ -1,15 +1,15 @@
          body { margin: 0;
            font-family: 'IBM Plex Sans', sans-serif;
-         background: #222
+         background: #fff
          }
             .menu {
                 position: absolute;
 
-                top: 0;
-                left: 500px;
+                top: 50px;
+                left: 400px;
             }
             .menu a {
-                color: #fff;
+                color: #000;
             }
 
             ul {
@@ -17,7 +17,8 @@
                 margin: 0;
                 padding: 0;
                 overflow: hidden;
-                background-color: #333;
+                background-color: #ccc;
+                    border-radius: 25px;
             }
 
             li {
@@ -28,10 +29,11 @@
                 display: block;
                 color: white;
                 text-align: center;
-                padding: 14px 16px;
+                padding: 15px 50px;
                 text-decoration: none;
             }
 
             li a:hover {
-                background-color: #111;
+                background-color: #aaa;
+                    border-radius: 25px;
             }

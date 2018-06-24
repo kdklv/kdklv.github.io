@@ -126,14 +126,14 @@
                 bodyB : body,
                 pointB : Vector.rotate({x:-bsize[0]/2,y:-bsize[1]/2},body.angle),
                 render: {visible: true},
-                stiffness:.7
+                stiffness:.1
             }));
             Composite.addConstraint(composite,Constraint.create({
                 pointA : {x:pos.x2,y:pos.y2},
                 bodyB : body,
                 pointB : Vector.rotate({x:bsize[0]/2,y:bsize[1]/2},body.angle),
-                render: {visible: true},
-                stiffness:.7
+                render: {visible: false},
+                stiffness:.1
             }))
         }
 
