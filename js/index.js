@@ -24,7 +24,7 @@
         _sceneEvents = [];
     var _world = _engine.world;
     var width = 1200;
-    var height = 900;
+    var height = 1200;
     _mouseConstraint = MouseConstraint.create(_engine);
 
     World.add(_engine.world, _mouseConstraint);
@@ -106,6 +106,7 @@
             var consts = Composite.allConstraints(currentPage.composite);
             for (var i=0; i< consts.length; i++) {
                 Composite.removeConstraint(currentPage.composite,consts[i]);
+
             }
 
         }
@@ -123,6 +124,8 @@
                 y1: bpos[1] - bsize[1]/2,
                 y2: bpos[1] + bsize[1]/2
             }
+
+
             Composite.addConstraint(composite,Constraint.create({
                 pointA : {x:pos.x1,y:pos.y1},
                 bodyB : body,
