@@ -146,7 +146,7 @@
                 pointA : {x:pos.x2,y:pos.y2},
                 bodyB : body,
                 pointB : Vector.rotate({x:bsize[0]/2,y:bsize[1]/2},body.angle),
-                render: {visible: false},
+                render: {visible: true},
                 stiffness:.1
             }))
         }
