@@ -23,7 +23,7 @@
         _mouseConstraint,
         _sceneEvents = [];
     var _world = _engine.world;
-    var width = 600;
+    var width = 900;
     var height = 900;
     _mouseConstraint = MouseConstraint.create(_engine);
 
