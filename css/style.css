@@ -13,37 +13,45 @@
 
             }
             .menu a {
-                color: #000;
+                color: #fff;
             }
 
             ul {
 
                 list-style-type: none;
-                margin-left: 25%;
-                margin-right: 25%;
+                margin-left: 35vw;
+                margin-right: 35vw;
+                text-align: center;
 
                 padding: 0;
                 overflow: hidden;
-                background-color: #ccc;
+                background-color: #666;
                     border-radius: 25px;
-                    width: 50%;
+padding-top: 10px;
+padding-bottom: 10px;
             }
 
             li {
                 float: left;
                 text-align: center;
-                width: 33%;
+                width: 10vw;
+                padding-left: 0;
+                padding-right: 0;
 
             }
 
             li a {
                 display: block;
                 color: white;
-                width: 100%;
+                width: auto;
                 text-decoration: none;
+                text-align: center;
+
             }
 
             li a:hover {
-                background-color: #aaa;
+                background-color: #fff;
+                color: #000;
                     border-radius: 25px;
+
             }
