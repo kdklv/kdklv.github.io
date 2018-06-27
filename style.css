@@ -19,6 +19,7 @@
                 list-style-type: none;
                 margin-left: 40vw;
                 margin-right: 40vw;
+
                 text-align: center;
                 overflow: hidden;
                 background-color: #000;
@@ -29,7 +30,7 @@ padding-bottom: 10px;
 
             li {
                 text-align: center;
-                width: 20vw;
+
 display: table-row;
                 padding-top: 10px;
                 padding-bottom: 10px;
@@ -40,6 +41,8 @@ display: table-row;
 
             li a {
                 color: white;
+                width: 20vw;
+
                 width: auto;
                 text-decoration: none;
                 text-align: center;
