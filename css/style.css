@@ -1,35 +1,45 @@
-         body { margin: 0;
-           font-family: 'IBM Plex Sans', sans-serif;
-         background: #fff
+         body {
+                margin: 0;
+                font-family: 'IBM Plex Sans', sans-serif;
+                text-align: center;
+
+           background: #fff;
          }
             .menu {
+
                 position: absolute;
 
                 top: 50px;
-                left: 400px;
+
             }
             .menu a {
                 color: #000;
             }
 
             ul {
+
                 list-style-type: none;
-                margin: 0;
+                margin-left: 25%;
+                margin-right: 25%;
+
                 padding: 0;
                 overflow: hidden;
                 background-color: #ccc;
                     border-radius: 25px;
+                    width: 50%;
             }
 
             li {
                 float: left;
+                text-align: center;
+                width: 33%;
+
             }
 
             li a {
                 display: block;
                 color: white;
-                text-align: center;
-                padding: 15px 50px;
+                width: 100%;
                 text-decoration: none;
             }
 

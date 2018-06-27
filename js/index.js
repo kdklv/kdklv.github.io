@@ -23,45 +23,54 @@
         _mouseConstraint,
         _sceneEvents = [];
     var _world = _engine.world;
-    var width = 1200;
-    var height = 1200;
+    var width = 600;
+    var height = 900;
     _mouseConstraint = MouseConstraint.create(_engine);
 
     World.add(_engine.world, _mouseConstraint);
     var _pagesettings = [
         {
             boxes: [
-                [80,80]
+              [70,10],
+              [20,40],
+              [70,10]
             ],
             position: [
-                [50,50]
-            ]
+              [50,20],
+                [50,50],
+                [50,80]            ]
 
         },
         {
-            boxes: [
-                [70,30],
-                [70,30]
-            ],
-            position: [
-              [50,33],
-              [50,66]
-            ]
+          boxes: [
+              [70,10],
+              [20,40],
+              [20,40],
+              [70,10]
+          ],
+          position: [
+            [50,20],
+              [35,50],
+              [65,50],
+              [50,80]
+          ]
 
         },
         {
-            boxes: [
-                [80,50],
-                [20,10],
-                [20,10],
-                [20,10]
-            ],
-            position: [
-                [50,40],
-                [20,75],
-                [50,75],
-                [80,75]
-            ]
+          boxes: [
+              [70,10],
+              [20,40],
+              [20,40],
+              [20,40],
+              [70,10]
+          ],
+          position: [
+            [50,20],
+              [25,50],
+              [50,50],
+              [75,50],
+              [50,80]
+          ]
         }
 
 
