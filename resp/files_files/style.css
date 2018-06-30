@@ -5,7 +5,8 @@
     box-sizing:         border-box;
 }
 
-html    { font: 62.5%/1.5 Arial, sans-serif; color: #000; background: #fff; }
+html    { font: 62.5%/1.5 'IBM Plex Sans', sans-serif; 
+  color: #000; background: #fff; }
 body    { }
 
 #content {
