@@ -5,13 +5,13 @@
     box-sizing:         border-box;
 }
 
-html    { font: 62.5%/1.5 'IBM Plex Sans', sans-serif; 
+html    { font: 62.5%/1.5 'IBM Plex Sans', sans-serif;
   color: #000; background: #fff; }
 body    { }
 
 #content {
 	float: left;
-	width: 100%; padding: 6.4rem; padding-left: 30rem;
+	width: 100%; padding: 5vw; padding-left: 10vh;
 }
 #content:after { content: ''; display: table; clear: both; }
 
