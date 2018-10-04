@@ -69,6 +69,12 @@
                 onFinishedLoading: patchFinishedLoading,
             });
         });
+        function preventBehavior(e) {
+  e.preventDefault();
+};
+
+var canvas = document.getElementById('glcanvas');
+canvas.addEventListener('touchmove', preventBehavior, false);
     </script>
 </body>
 </html>
