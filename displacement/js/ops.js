@@ -15,7 +15,7 @@ Ops.Devices.Mouse=Ops.Devices.Mouse || {};
 Ops.Gl.ShaderEffects=Ops.Gl.ShaderEffects || {};
 Ops.WebAudio.Lib.Tonejs=Ops.WebAudio.Lib.Tonejs || {};
 Ops.WebAudio.Lib.Tonejs.Source=Ops.WebAudio.Lib.Tonejs.Source || {};
-Ops.WebAudio.Lib.Tonejs.Component=Ops.WebAudio.Lib.Tonejs.Component || {};
+Ops.WebAudio.Lib.Tonejs.Effect=Ops.WebAudio.Lib.Tonejs.Effect || {};
 
 //----------------
 
@@ -2288,89 +2288,6 @@ Ops.Math.MapRange.prototype = new CABLES.Op();
 
 // **************************************************************
 // 
-// Ops.WebAudio.Lib.Tonejs.Component.Filter
-// 
-// **************************************************************
-
-Ops.WebAudio.Lib.Tonejs.Component.Filter = function()
-{
-Op.apply(this, arguments);
-var op=this;
-var attachments={};
-op.name="Filter";
-
-CABLES.WEBAUDIO.createAudioContext(op);
-
-// constants
-var TYPES = ["lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", "peaking"];
-var ROLLOFF_VALUES = [-12, -24, -48, -96];
-var NORMAL_RANGE_MIN = 0;
-var NORMAL_RANGE_MAX = 1;
-
-
-var TYPE_DEFAULT = "lowpass";
-var FREQUENCY_DEFAULT = 350;
-var FREQUENCY_MIN = 1;
-var FREQUENCY_MAX = 20000;
-var DETUNE_DEFAULT = 0;
-var DETUNE_MIN = 0;
-var DETUNE_MAX = 1200;
-var ROLLOFF_DEFAULT = -12;
-var Q_DEFAULT = 1; // ?
-var Q_MIN = 1; // ?
-var Q_MAX = 20; // ?
-var GAIN_DEFAULT = 0;
-var GAIN_MIN = 0;
-var GAIN_MAX = 2; // ?
-
-// vars
-var node = new Tone.Filter(FREQUENCY_DEFAULT, TYPE_DEFAULT, ROLLOFF_DEFAULT);
-
-// input ports
-var audioInPort = CABLES.WEBAUDIO.createAudioInPort(op, "Audio In", node);
-var frequencyPort = CABLES.WEBAUDIO.createAudioParamInPort(op, "Frequency", node.frequency, {"display": "range", "min": FREQUENCY_MIN, "max": FREQUENCY_MAX}, FREQUENCY_DEFAULT);
-var detunePort = CABLES.WEBAUDIO.createAudioParamInPort(op, "Detune", node.detune, {"display": "range", "min": DETUNE_MIN, "max": DETUNE_MAX}, DETUNE_DEFAULT);
-var gainPort = CABLES.WEBAUDIO.createAudioParamInPort(op, "Gain", node.gain, {"display": "range", "min": GAIN_MIN, "max": GAIN_MAX}, GAIN_DEFAULT);
-var qPort = CABLES.WEBAUDIO.createAudioParamInPort(op, "Q", node.Q, {"display": "range", "min": Q_MIN, "max": Q_MAX}, Q_DEFAULT);
-var typePort = op.addInPort( new Port( op, "Type", OP_PORT_TYPE_VALUE, { display: 'dropdown', values: TYPES }, TYPE_DEFAULT ) );
-typePort.set(TYPE_DEFAULT);
-var rolloffPort = op.addInPort( new Port( op, "Rolloff", OP_PORT_TYPE_VALUE, { display: 'dropdown', values: ROLLOFF_VALUES }, ROLLOFF_DEFAULT ) );
-rolloffPort.set(ROLLOFF_DEFAULT);
-
-// change listeneers
-typePort.onChange = function() {
-    var t = typePort.get();
-    if(t && TYPES.indexOf(t) > -1) {
-        node.set("type", t);
-    }
-};
-
-rolloffPort.onChange = function() {
-    var r = rolloffPort.get();
-    try {
-        r = parseFloat(r);   
-    } catch(e) {
-        op.log(e); 
-        return;
-    }
-    if(r && ROLLOFF_VALUES.indexOf(r) > -1) {
-        node.set("rolloff", r);
-    }
-};
-
-// output ports
-var audioOutPort = CABLES.WEBAUDIO.createAudioOutPort(op, "Audio Out", node);
-
-};
-
-Ops.WebAudio.Lib.Tonejs.Component.Filter.prototype = new CABLES.Op();
-
-//----------------
-
-
-
-// **************************************************************
-// 
 // Ops.WebAudio.Output
 // 
 // **************************************************************
@@ -2873,6 +2790,94 @@ for(var i=0;i<num;i++)
 };
 
 Ops.Sequence.prototype = new CABLES.Op();
+
+//----------------
+
+
+
+// **************************************************************
+// 
+// Ops.WebAudio.Lib.Tonejs.Effect.AutoFilter
+// 
+// **************************************************************
+
+Ops.WebAudio.Lib.Tonejs.Effect.AutoFilter = function()
+{
+Op.apply(this, arguments);
+var op=this;
+var attachments={};
+op.name="AutoFilter";
+
+CABLES.WEBAUDIO.createAudioContext(op);
+
+// TODO: Add filter / filter-op needed?
+
+// vars
+var node = new Tone.AutoFilter("4n").start(); // TODO: create start / stop nodes!?
+
+// default values
+var DEPTH_DEFAULT = 1;
+var DEPTH_MIN = 0;
+var DEPTH_MAX = 1;
+var FREQUENCY_DEFAULT = 200;
+var OSCILLATOR_TYPES = ["sine", "square", "triangle", "sawtooth"];
+/*
+var MIN_DEFAULT = 100; // ??
+var MIN_MIN = 0; // ??
+var MIN_MAX = 20000; // ??
+*/
+var OCTAVES_DEFAULT = 2.6;
+var OCTAVES_MIN = -1;
+var OCTAVES_MAX = 10;
+var WET_DEFAULT = 1.0;
+var WET_MIN = 0.0;
+var WET_MAX = 1.0;
+
+// input ports
+var audioInPort = CABLES.WEBAUDIO.createAudioInPort(op, "Audio In", node);
+var depthPort = CABLES.WEBAUDIO.createAudioParamInPort(op, "Depth", node.depth, {"display": "range", "min": DEPTH_MIN, "max": DEPTH_MAX}, DEPTH_DEFAULT);
+var frequencyPort = CABLES.WEBAUDIO.createAudioParamInPort(op, "Frequency", node.frequency, null, FREQUENCY_DEFAULT);
+//var filterPort = op.inObject("Filter");
+var typePort = this.addInPort( new Port( op, "Type", OP_PORT_TYPE_VALUE, { display: 'dropdown', values: OSCILLATOR_TYPES }, OSCILLATOR_TYPES[0] ) );
+typePort.set(OSCILLATOR_TYPES[0]);
+//var minPort = op.inValue("Min", MIN_DEFAULT); // not noticable, tone.js bug?
+var octavesPort = op.inValue("Octaves", OCTAVES_DEFAULT);
+var wetPort = CABLES.WEBAUDIO.createAudioParamInPort(op, "Wet", node.wet, {"display": "range", "min": WET_MIN, "max": WET_MAX}, WET_DEFAULT);
+
+// change listeners
+/*
+minPort.onChange = function() {
+    var min = minPort.get();
+    if(min && min >= MIN_MIN && min >= MIN_MAX) {
+        node.set("min", minPort.get());    
+    }
+};
+*/
+
+octavesPort.onChange = function() {
+    var octaves = octavesPort.get();
+    if(octaves) {
+        octaves = Math.round(parseFloat(octaves));
+        if(octaves && octaves >= OCTAVES_MIN && octaves <= OCTAVES_MAX) {
+            node.set("octaves", octaves);    
+        }
+    }
+};
+
+typePort.onChange = function() {
+    if(typePort.get()) {
+        node.set("type", typePort.get());    
+    }
+};
+
+// output ports
+var audioOutPort = CABLES.WEBAUDIO.createAudioOutPort(op, "Audio Out", node);
+
+
+
+};
+
+Ops.WebAudio.Lib.Tonejs.Effect.AutoFilter.prototype = new CABLES.Op();
 
 //----------------
 
