@@ -31,13 +31,8 @@
     </style>
 </head>
 <body>
-    <canvas id="glcanvas" width="100vw" height="100vh"></canvas>
+    <iframe style="width: 100vw;height:100vh;border:0px;" src="https://sandbox.cables.gl/view/5bb738aae4a17ed13585c1cb"></iframe>
 
-
-    <script type="text/javascript" src="js/libs.core.min.js"></script>
-    <script type="text/javascript" src="js/cables.min.js"></script>
-
-    <script type="text/javascript" src="js/ops.js"></script>
 
     <script>
         /**
@@ -69,13 +64,6 @@
                 onFinishedLoading: patchFinishedLoading,
             });
         });
-        function preventBehavior(e) {
-  e.preventDefault();
-};
-
-var canvas = document.getElementById('glcanvas');
-canvas.addEventListener('touchmove', preventBehavior, false);
-
     </script>
 </body>
 </html>
