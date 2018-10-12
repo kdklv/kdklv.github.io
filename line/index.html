@@ -6,7 +6,7 @@
   left: 620px;
   top: 80px;
   width: 160px;
-  height: 310px;
+  height: 300px;
   border: 1px solid #ccc;
   overflow-y: scroll;
 }
@@ -38,15 +38,17 @@
 </head>
   <body>
 
-    <div id="ex-020" class="stage" style="width: 800px; height: 400px;">
-      <div id="ex-020-h" class="anchor40" style="left: 510px; top: 300px;"></div>
+    <div id="ex-020" class="stage" style="width: 800px; height: 300px;">
+      <div id="ex-020-h" class="anchor40" style="left: 10px; top: 10px;"></div>
       <div id="ex-020-frame">
         <div>
           <p style="padding: 5px; text-align: center;">Scroll this</p>
-          <div id="ex-020-i" class="anchor40" style="left: 70px; top: 250px;"></div>
+          <div id="ex-020-i" class="anchor40" style="left: 70px; top: 200px;"></div>
         </div>
 
-
+    <script src="leader-line.min.js"></script>
+    <script src="ex.css"></script>
+    <script src="src/anim-event.min.js"></script>
     <script>
     window.addEventListener('load', function() {
       'use strict';
@@ -55,25 +57,18 @@
       var lineH = new LeaderLine(
         document.getElementById('ex-020-h'),
         document.getElementById('ex-020-i'),
-        {
-  path: 'straight'
-  // dash: {animation: true}
-}
-      );
+       // { path: 'straight' } 
+        );
 
 
-
-      document.getElementById('ex-020-frame').addEventListener('scroll', AnimEvent.add(function() {
-        line.position();
-      }), false);
+      document.getElementById('ex-020-frame').addEventListener('scroll', AnimEvent.add(function() { line.position(); }), false);
+    
 
     });
 
     </script>
 
-    <script src="leader-line.min.js"></script>
-    <script src="ex.css"></script>
-    <script src="anim-event.min.js"></script>
+
 
 
   </body>
