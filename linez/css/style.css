@@ -6,7 +6,7 @@ svg { display: block }
   height: 200vh;  
   width: 100vw;
   position: relative;
-  background-color: #222;
+  background-color: #fff;
 }
 
 .box {
@@ -14,7 +14,7 @@ svg { display: block }
   padding: 10px;
   position: absolute;
   color: white;
-  background-color: rgba(0, 0, 0, .8);
+  background-color: rgba(0,0,0);
   box-shadow: 0 0 0 3px #222;
   border-radius: 999px;
 }

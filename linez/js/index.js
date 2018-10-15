@@ -15,7 +15,7 @@ for (var i = 1, len = elementsPos.length; i < len; i++) {
   var line = draw.line(
     elementsPos[0].left + elementsPos[0].width / 2, elementsPos[0].top + elementsPos[0].height / 2, 
     elementsPos[i].left + elementsPos[i].width / 2, elementsPos[i].top + elementsPos[i].height / 2
-  ).stroke({ width: 1, color: '#fff' });
+  ).stroke({ width: 1, color: '#000' });
   
   lines.push(line);
 }
