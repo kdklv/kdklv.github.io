@@ -1,0 +1,52 @@
+body { margin: 0 }
+
+svg { display: block }
+
+.wrapper {
+  height: 200vh;  
+  width: 100vw;
+  position: relative;
+  background-color: #222;
+}
+
+.box {
+  font-family: "Helvetica";
+  padding: 10px;
+  position: absolute;
+  color: white;
+  background-color: rgba(0, 0, 0, .8);
+  box-shadow: 0 0 0 3px #222;
+  border-radius: 999px;
+}
+
+#el1 {
+  box-sizing: border-box;
+  top: 10px;
+  left: 10px;
+  position: fixed;
+}
+
+#el2 {
+  top: 10%;
+  right: 60%;
+}
+
+#el3 {
+  top: 30%;
+  right: 10%;
+}
+
+#el4 {
+  top: 40%;
+  right: 55%;
+}
+
+#el5 {
+  top: 55%;
+  right: 80%;
+}
+
+#el6 {
+  top: 70%;
+  right: 15%;
+}
