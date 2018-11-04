@@ -7,11 +7,10 @@ Ops.Html=Ops.Html || {};
 Ops.Json3d=Ops.Json3d || {};
 Ops.Trigger=Ops.Trigger || {};
 Ops.Devices=Ops.Devices || {};
-Ops.Gl.Meshes=Ops.Gl.Meshes || {};
 Ops.Gl.Matrix=Ops.Gl.Matrix || {};
 Ops.Gl.Shader=Ops.Gl.Shader || {};
+Ops.Gl.Meshes=Ops.Gl.Meshes || {};
 Ops.Deprecated=Ops.Deprecated || {};
-Ops.Gl.Textures=Ops.Gl.Textures || {};
 Ops.Deprecated.Gl=Ops.Deprecated.Gl || {};
 Ops.Devices.Mouse=Ops.Devices.Mouse || {};
 Ops.Deprecated.Ops=Ops.Deprecated.Ops || {};
@@ -2310,112 +2309,6 @@ Ops.Html.TransformCSS3DElement.prototype = new CABLES.Op();
 
 // **************************************************************
 // 
-// Ops.Gl.Textures.WebcamTexture
-// 
-// **************************************************************
-
-Ops.Gl.Textures.WebcamTexture = function()
-{
-CABLES.Op.apply(this,arguments);
-var op=this;
-var attachments={};
-var flip=op.addInPort(new CABLES.Port(op,"flip",CABLES.OP_PORT_TYPE_VALUE,{ display:'bool' } ));
-var fps=op.addInPort(new CABLES.Port(op,"fps",CABLES.OP_PORT_TYPE_VALUE ));
-var inActive=op.inValueBool("Active",true);
-
-// var textureOut=op.addOutPort(new CABLES.Port(op,"texture",CABLES.OP_PORT_TYPE_TEXTURE,{preview:true}));
-var textureOut=op.outTexture("texture");
-
-var outRatio=op.outValue("Ratio");
-
-fps.set(30);
-flip.set(true);
-
-var cgl=op.patch.cgl;
-var videoElement=document.createElement('video');
-videoElement.setAttribute("id", "webcam");
-videoElement.style.display="none";
-
-    var canvas = op.patch.cgl.canvas.parentElement;
-    canvas.appendChild(videoElement);
-
-var tex=new CGL.Texture(cgl);
-tex.setSize(8,8);
-textureOut.set(tex);
-var timeout=null;
-
-var canceled=false;
-
-inActive.onChange=function()
-{
-    if(inActive.get())
-    {
-        canceled=false;
-        updateTexture();
-    }
-    else
-    {
-        canceled=true;
-    }
-    
-};
-
-fps.onChange=function()
-{
-    if(fps.get()<1)fps.set(1);
-    clearTimeout(timeout);
-    timeout=setTimeout(updateTexture, 1000/fps.get());
-};
-
-function updateTexture()
-{
-    cgl.gl.bindTexture(cgl.gl.TEXTURE_2D, tex.tex);
-    cgl.gl.pixelStorei(cgl.gl.UNPACK_FLIP_Y_WEBGL, flip.get());
-
-    cgl.gl.texImage2D(cgl.gl.TEXTURE_2D, 0, cgl.gl.RGBA, cgl.gl.RGBA, cgl.gl.UNSIGNED_BYTE, videoElement);
-    cgl.gl.bindTexture(cgl.gl.TEXTURE_2D, null);
-
-    if(!canceled) timeout=setTimeout(updateTexture, 1000/fps.get());
-}
-
-function startWebcam()
-{
-    var constraints = { audio: false, video: true };
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-    navigator.getUserMedia(constraints,
-        function(stream)
-        {
-            videoElement.autplay=true;
-            videoElement.src = window.URL.createObjectURL(stream);
-            videoElement.onloadedmetadata = function(e)
-            {
-                tex.setSize(videoElement.videoWidth,videoElement.videoHeight);
-                
-                outRatio.set(videoElement.videoWidth/videoElement.videoHeight);
-
-                videoElement.play();
-                updateTexture();
-            };
-        },
-        function()
-        {
-            console.log('error webcam');
-        });
-}
-
-startWebcam();
-
-
-};
-
-Ops.Gl.Textures.WebcamTexture.prototype = new CABLES.Op();
-
-//----------------
-
-
-
-// **************************************************************
-// 
 // Ops.Json3d.Json3dMesh
 // 
 // **************************************************************
@@ -2684,483 +2577,6 @@ function reload()
 };
 
 Ops.Json3d.Json3dMesh.prototype = new CABLES.Op();
-
-//----------------
-
-
-
-// **************************************************************
-// 
-// Ops.Gl.Shader.MatCapMaterial
-// 
-// **************************************************************
-
-Ops.Gl.Shader.MatCapMaterial = function()
-{
-CABLES.Op.apply(this,arguments);
-var op=this;
-var attachments={};
-var self=this;
-var cgl=self.patch.cgl;
-
-this.render=this.addInPort(new CABLES.Port(this,"render",CABLES.OP_PORT_TYPE_FUNCTION));
-this.trigger=this.addOutPort(new CABLES.Port(this,"trigger",CABLES.OP_PORT_TYPE_FUNCTION));
-this.shaderOut=this.addOutPort(new CABLES.Port(this,"shader",CABLES.OP_PORT_TYPE_OBJECT));
-this.shaderOut.ignoreValueSerialize=true;
-
-this.texture=this.addInPort(new CABLES.Port(this,"texture",CABLES.OP_PORT_TYPE_TEXTURE,{preview:true,display:'createOpHelper'}));
-this.textureUniform=null;
-
-this.textureDiffuse=this.addInPort(new CABLES.Port(this,"diffuse",CABLES.OP_PORT_TYPE_TEXTURE,{preview:true,display:'createOpHelper'}));
-this.textureDiffuseUniform=null;
-
-this.textureNormal=this.addInPort(new CABLES.Port(this,"normal",CABLES.OP_PORT_TYPE_TEXTURE,{preview:true,display:'createOpHelper'}));
-this.textureNormalUniform=null;
-
-this.normalScale=this.addInPort(new CABLES.Port(this,"normalScale",CABLES.OP_PORT_TYPE_VALUE,{display:'range'}));
-this.normalScale.set(0.4);
-this.normalScaleUniform=null;
-
-this.textureSpec=this.addInPort(new CABLES.Port(this,"specular",CABLES.OP_PORT_TYPE_TEXTURE,{preview:true,display:'createOpHelper'}));
-this.textureSpecUniform=null;
-
-this.textureSpecMatCap=this.addInPort(new CABLES.Port(this,"specular matcap",CABLES.OP_PORT_TYPE_TEXTURE,{preview:true,display:'createOpHelper'}));
-this.textureSpecMatCapUniform=null;
-
-
-this.diffuseRepeatX=this.addInPort(new CABLES.Port(this,"diffuseRepeatX",CABLES.OP_PORT_TYPE_VALUE));
-this.diffuseRepeatY=this.addInPort(new CABLES.Port(this,"diffuseRepeatY",CABLES.OP_PORT_TYPE_VALUE));
-this.diffuseRepeatX.set(1.0);
-this.diffuseRepeatY.set(1.0);
-
-var pOpacity=op.inValueSlider("Opacity",1);
-
-
-this.diffuseRepeatX.onChange=function()
-{
-    self.diffuseRepeatXUniform.setValue(self.diffuseRepeatX.get());
-};
-
-this.diffuseRepeatY.onChange=function()
-{
-    self.diffuseRepeatYUniform.setValue(self.diffuseRepeatY.get());
-};
-
-
-this.calcTangents=this.addInPort(new CABLES.Port(this,"calc normal tangents",CABLES.OP_PORT_TYPE_VALUE,{display:'bool'}));
-this.calcTangents.onChange=function()
-{
-    if(self.calcTangents.get()) shader.define('CALC_TANGENT');
-        else shader.removeDefine('CALC_TANGENT');
-};
-
-this.projectCoords=this.addInPort(new CABLES.Port(this,"projectCoords",CABLES.OP_PORT_TYPE_VALUE,{display:'dropdown',values:['no','xy','yz','xz']}));
-this.projectCoords.set('no');
-this.projectCoords.onChange=function()
-{
-    shader.removeDefine('DO_PROJECT_COORDS_XY');
-    shader.removeDefine('DO_PROJECT_COORDS_YZ');
-    shader.removeDefine('DO_PROJECT_COORDS_XZ');
-
-    if(self.projectCoords.get()=='xy') shader.define('DO_PROJECT_COORDS_XY');
-    if(self.projectCoords.get()=='yz') shader.define('DO_PROJECT_COORDS_YZ');
-    if(self.projectCoords.get()=='xz') shader.define('DO_PROJECT_COORDS_XZ');
-};
-
-this.normalRepeatX=this.addInPort(new CABLES.Port(this,"normalRepeatX",CABLES.OP_PORT_TYPE_VALUE));
-this.normalRepeatY=this.addInPort(new CABLES.Port(this,"normalRepeatY",CABLES.OP_PORT_TYPE_VALUE));
-this.normalRepeatX.set(1.0);
-this.normalRepeatY.set(1.0);
-
-this.normalRepeatX.onChange=function()
-{
-    self.normalRepeatXUniform.setValue(self.normalRepeatX.get());
-};
-
-this.normalRepeatY.onChange=function()
-{
-    self.normalRepeatYUniform.setValue(self.normalRepeatY.get());
-};
-
-this.normalScale.onChange=function()
-{
-    self.normalScaleUniform.setValue(self.normalScale.get()*2.0);
-};
-
-this.texture.onPreviewChanged=function()
-{
-    if(self.texture.showPreview) self.render.onTriggered=self.texture.get().preview;
-        else self.render.onTriggered=self.doRender;
-};
-
-this.textureDiffuse.onPreviewChanged=function()
-{
-    if(self.textureDiffuse.showPreview) self.render.onTriggered=self.textureDiffuse.get().preview;
-        else self.render.onTriggered=self.doRender;
-};
-
-this.textureNormal.onPreviewChanged=function()
-{
-    if(self.textureNormal.showPreview) self.render.onTriggered=self.textureNormal.get().preview;
-        else self.render.onTriggered=self.doRender;
-};
-
-this.texture.onChange=function()
-{
-    if(self.texture.get())
-    {
-        if(self.textureUniform!==null)return;
-        shader.removeUniform('tex');
-        self.textureUniform=new CGL.Uniform(shader,'t','tex',0);
-    }
-    else
-    {
-        shader.removeUniform('tex');
-        self.textureUniform=null;
-    }
-};
-
-this.textureDiffuse.onChange=function()
-{
-    if(self.textureDiffuse.get())
-    {
-        if(self.textureDiffuseUniform!==null)return;
-        shader.define('HAS_DIFFUSE_TEXTURE');
-        shader.removeUniform('texDiffuse');
-        self.textureDiffuseUniform=new CGL.Uniform(shader,'t','texDiffuse',1);
-    }
-    else
-    {
-        shader.removeDefine('HAS_DIFFUSE_TEXTURE');
-        shader.removeUniform('texDiffuse');
-        self.textureDiffuseUniform=null;
-    }
-};
-
-
-
-this.textureNormal.onChange=function()
-{
-    if(self.textureNormal.get())
-    {
-        if(self.textureNormalUniform!==null)return;
-        shader.define('HAS_NORMAL_TEXTURE');
-        shader.removeUniform('texNormal');
-        self.textureNormalUniform=new CGL.Uniform(shader,'t','texNormal',2);
-    }
-    else
-    {
-        shader.removeDefine('HAS_NORMAL_TEXTURE');
-        shader.removeUniform('texNormal');
-        self.textureNormalUniform=null;
-    }
-};
-
-
-function changeSpec()
-{
-    if(self.textureSpec.get() && self.textureSpecMatCap.get())
-    {
-        if(self.textureSpecUniform!==null)return;
-        shader.define('USE_SPECULAR_TEXTURE');
-        shader.removeUniform('texSpec');
-        shader.removeUniform('texSpecMatCap');
-        self.textureSpecUniform=new CGL.Uniform(shader,'t','texSpec',3);
-        self.textureSpecMatCapUniform=new CGL.Uniform(shader,'t','texSpecMatCap',4);
-    }
-    else
-    {
-        shader.removeDefine('USE_SPECULAR_TEXTURE');
-        shader.removeUniform('texSpec');
-        shader.removeUniform('texSpecMatCap');
-        self.textureSpecUniform=null;
-        self.textureSpecMatCapUniform=null;
-    }
-
-}
-
-this.textureSpec.onChange=changeSpec;
-this.textureSpecMatCap.onChange=changeSpec;
-
-
-function bindTextures()
-{
-    if(self.texture.get())cgl.setTexture(0,self.texture.get().tex);
-    if(self.textureDiffuse.get()) cgl.setTexture(1,self.textureDiffuse.get().tex);
-    if(self.textureNormal.get()) cgl.setTexture(2,self.textureNormal.get().tex);
-    if(self.textureSpec.get()) cgl.setTexture(3,self.textureSpec.get().tex);
-    if(self.textureSpecMatCap.get()) cgl.setTexture(4,self.textureSpecMatCap.get().tex);
-};
-
-this.doRender=function()
-{
-    shader.bindTextures=bindTextures;
-
-    cgl.setShader(shader);
-    self.trigger.trigger();
-    cgl.setPreviousShader();
-
-
-
-    // if(self.texture.get())
-    // {
-    //     cgl.setTexture(0);
-    //     cgl.gl.bindTexture(cgl.gl.TEXTURE_2D, null);
-    // }
-
-    // if(self.textureDiffuse.get())
-    // {
-    //     cgl.setTexture(1);
-    //     cgl.gl.bindTexture(cgl.gl.TEXTURE_2D, null);
-    // }
-
-    // if(self.textureNormal.get())
-    // {
-    //     cgl.setTexture(2);
-    //     cgl.gl.bindTexture(cgl.gl.TEXTURE_2D, null);
-    // }
-
-    // if(self.textureSpec.get())
-    // {
-    //     cgl.setTexture(3);
-    //     cgl.gl.bindTexture(cgl.gl.TEXTURE_2D, null);
-    // }
-    // if(self.textureSpecMatCap.get())
-    // {
-    //     cgl.setTexture(4);
-    //     cgl.gl.bindTexture(cgl.gl.TEXTURE_2D, null);
-    // }
-};
-
-var srcVert=''
-    .endl()+'{{MODULES_HEAD}}'
-
-    .endl()+'IN vec3 vPosition;'
-    .endl()+'IN float attrVertIndex;'
-
-    .endl()+'IN vec2 attrTexCoord;'
-    .endl()+'IN vec3 attrVertNormal;'
-
-    .endl()+'#ifdef HAS_NORMAL_TEXTURE'
-    .endl()+'   IN vec3 attrTangent;'
-    .endl()+'   IN vec3 attrBiTangent;'
-
-    .endl()+'   OUT vec3 vBiTangent;'
-    .endl()+'   OUT vec3 vTangent;'
-    .endl()+'#endif'
-
-    .endl()+'OUT vec2 texCoord;'
-    .endl()+'OUT vec3 norm;'
-    .endl()+'UNI mat4 projMatrix;'
-    .endl()+'UNI mat4 modelMatrix;'
-    .endl()+'UNI mat4 viewMatrix;'
-    .endl()+'UNI mat4 normalMatrix;'
-    .endl()+'OUT vec2 vNorm;'
-
-    .endl()+'OUT vec3 e;'
-
-    .endl()+'void main()'
-    .endl()+'{'
-    .endl()+'    texCoord=attrTexCoord;'
-    .endl()+'    norm=attrVertNormal;'
-
-    .endl()+'    #ifdef HAS_NORMAL_TEXTURE'
-    .endl()+'        vTangent=attrTangent;'
-    .endl()+'        vBiTangent=attrBiTangent;'
-    .endl()+'    #endif'
-
-    .endl()+'    vec4 pos = vec4( vPosition, 1. );'
-    .endl()+'    mat4 mMatrix=modelMatrix;'
-
-    .endl()+'    {{MODULE_VERTEX_POSITION}}'
-    .endl()+'    mat4 mvMatrix= viewMatrix * mMatrix;'
-    .endl()+'    e = normalize( vec3( mvMatrix * pos ) );'
-    .endl()+'    vec3 n = normalize( mat3(normalMatrix) * norm );'
-
-    .endl()+'    vec3 r = reflect( e, n );'
-    .endl()+'    float m = 2. * sqrt( '
-    .endl()+'        pow(r.x, 2.0)+'
-    .endl()+'        pow(r.y, 2.0)+'
-    .endl()+'        pow(r.z + 1.0, 2.0)'
-    .endl()+'    );'
-    .endl()+'    vNorm = r.xy / m + 0.5;'
-
-    .endl()+'   #ifdef DO_PROJECT_COORDS_XY'
-    .endl()+'       texCoord=(projMatrix * mvMatrix*pos).xy*0.1;'
-    .endl()+'   #endif'
-
-    .endl()+'   #ifdef DO_PROJECT_COORDS_YZ'
-    .endl()+'       texCoord=(projMatrix * mvMatrix*pos).yz*0.1;'
-    .endl()+'   #endif'
-
-    .endl()+'   #ifdef DO_PROJECT_COORDS_XZ'
-    .endl()+'       texCoord=(projMatrix * mvMatrix*pos).xz*0.1;'
-    .endl()+'   #endif'
-
-    .endl()+'   gl_Position = projMatrix * mvMatrix * pos;'
-
-    .endl()+'}';
-
-
-var srcFrag=''
-
-
-    .endl()+'{{MODULES_HEAD}}'
-
-    .endl()+'IN vec3 norm;'
-    .endl()+'IN vec2 texCoord;'
-    .endl()+'UNI sampler2D tex;'
-    .endl()+'IN vec2 vNorm;'
-    .endl()+'UNI mat4 viewMatrix;'
-
-    .endl()+'UNI float diffuseRepeatX;'
-    .endl()+'UNI float diffuseRepeatY;'
-    .endl()+'UNI float opacity;'
-
-    .endl()+'#ifdef HAS_DIFFUSE_TEXTURE'
-    .endl()+'   UNI sampler2D texDiffuse;'
-    .endl()+'#endif'
-
-    .endl()+'#ifdef USE_SPECULAR_TEXTURE'
-    .endl()+'   UNI sampler2D texSpec;'
-    .endl()+'   UNI sampler2D texSpecMatCap;'
-    .endl()+'#endif'
-
-
-    .endl()+'#ifdef HAS_NORMAL_TEXTURE'
-    .endl()+'   IN vec3 vBiTangent;'
-    .endl()+'   IN vec3 vTangent;'
-
-    .endl()+'   UNI sampler2D texNormal;'
-    .endl()+'   UNI mat4 normalMatrix;'
-    .endl()+'   UNI float normalScale;'
-    .endl()+'   UNI float normalRepeatX;'
-    .endl()+'   UNI float normalRepeatY;'
-    .endl()+'   IN vec3 e;'
-    .endl()+'   vec2 vNormt;'
-    .endl()+'#endif'
-
-    .endl()+''
-    .endl()+'void main()'
-    .endl()+'{'
-
-    .endl()+'   vec2 vnOrig=vNorm;'
-    .endl()+'   vec2 vn=vNorm;'
-
-    .endl()+'   #ifdef HAS_TEXTURES'
-    .endl()+'       vec2 texCoords=texCoord;'
-    .endl()+'       {{MODULE_BEGIN_FRAG}}'
-    .endl()+'   #endif'
-
-
-    .endl()+'   #ifdef HAS_NORMAL_TEXTURE'
-    .endl()+'       vec3 tnorm=texture2D( texNormal, vec2(texCoord.x*normalRepeatX,texCoord.y*normalRepeatY) ).xyz * 2.0 - 1.0;'
-
-    .endl()+'       tnorm = normalize(tnorm*normalScale);'
-
-    .endl()+'       vec3 tangent;'
-    .endl()+'       vec3 binormal;'
-
-    .endl()+'       #ifdef CALC_TANGENT'
-    .endl()+'           vec3 c1 = cross(norm, vec3(0.0, 0.0, 1.0));'
-    // .endl()+'           vec3 c2 = cross(norm, vec3(0.0, 1.0, 0.0));'
-    // .endl()+'           if(length(c1)>length(c2)) tangent = c2;'
-    // .endl()+'               else tangent = c1;'
-    .endl()+'           tangent = c1;'
-    .endl()+'           tangent = normalize(tangent);'
-    .endl()+'           binormal = cross(norm, tangent);'
-    .endl()+'           binormal = normalize(binormal);'
-    .endl()+'       #endif'
-
-    .endl()+'       #ifndef CALC_TANGENT'
-    .endl()+'           tangent=normalize(vTangent);'
-    // .endl()+'           tangent.y*=-13.0;'
-    // .endl()+'           binormal=vBiTangent*norm;'
-    // .endl()+'           binormal.z*=-1.0;'
-    // .endl()+'           binormal=normalize(binormal);'
-    .endl()+'           binormal=normalize( cross( normalize(norm), normalize(vBiTangent) )   );'
-        // vBinormal = normalize( cross( vNormal, vTangent ) * tangent.w );
-
-    .endl()+'       #endif'
-
-    .endl()+'       tnorm=normalize(tangent*tnorm.x + binormal*tnorm.y + norm*tnorm.z);'
-
-    .endl()+'       vec3 n = normalize( mat3(normalMatrix) * (norm+tnorm*normalScale) );'
-
-    .endl()+'       vec3 r = reflect( e, n );'
-    .endl()+'       float m = 2. * sqrt( '
-    .endl()+'           pow(r.x, 2.0)+'
-    .endl()+'           pow(r.y, 2.0)+'
-    .endl()+'           pow(r.z + 1.0, 2.0)'
-    .endl()+'       );'
-    .endl()+'       vn = (r.xy / m + 0.5);'
-
-    .endl()+'       vn.t=clamp(vn.t, 0.0, 1.0);'
-    .endl()+'       vn.s=clamp(vn.s, 0.0, 1.0);'
-    .endl()+'    #endif'
-
-    .endl()+'    vec4 col = texture2D( tex, vn );'
-
-    // .endl()+'   float bias=0.1;'
-    // .endl()+'    if(vn.s>1.0-bias || vn.t>1.0-bias || vn.s<bias || vn.t<bias)' //col.rgb=vec3(0.0,1.0,0.0);
-    // .endl()+'    {;'
-    // .endl()+'       col = texture2D( tex, vnOrig );'
-
-    // .endl()+'    };'
-
-
-    .endl()+'    #ifdef HAS_DIFFUSE_TEXTURE'
-    .endl()+'       col = col*texture2D( texDiffuse, vec2(texCoords.x*diffuseRepeatX,texCoords.y*diffuseRepeatY));'
-    .endl()+'    #endif'
-
-    .endl()+'    #ifdef USE_SPECULAR_TEXTURE'
-    .endl()+'       vec4 spec = texture2D( texSpecMatCap, vn );'
-    .endl()+'       spec*= texture2D( texSpec, vec2(texCoords.x*diffuseRepeatX,texCoords.y*diffuseRepeatY) );'
-    .endl()+'       col+=spec;'
-    .endl()+'    #endif'
-
-    .endl()+'    col.a*=opacity;'
-
-    .endl()+'    {{MODULE_COLOR}}'
-
-    // .endl()+'    col.xy=vn;'
-    // .endl()+'    col.r=0.0;'
-    // .endl()+'    col.g=0.0;'
-    // .endl()+'    col.b=0.0;'
-
-    // .endl()+'    if()col.rgb=vec3(1.0,0.0,0.0);'
-
-    // .endl()+'    col.rgb=vec3(length(vn),0.0,0.0);'
-
-
-    .endl()+'    outColor= col;'
-    .endl()+''
-    .endl()+'}';
-
-var shader=new CGL.Shader(cgl,'MatCapMaterial');
-var uniOpacity=new CGL.Uniform(shader,'f','opacity',pOpacity);
-shader.setModules(['MODULE_VERTEX_POSITION','MODULE_COLOR','MODULE_BEGIN_FRAG']);
-
-
-shader.bindTextures=bindTextures;
-this.shaderOut.set(shader);
-// this.onLoaded=shader.compile;
-shader.setSource(srcVert,srcFrag);
-this.normalScaleUniform=new CGL.Uniform(shader,'f','normalScale',self.normalScale.get());
-this.normalRepeatXUniform=new CGL.Uniform(shader,'f','normalRepeatX',self.normalRepeatX.get());
-this.normalRepeatYUniform=new CGL.Uniform(shader,'f','normalRepeatY',self.normalRepeatY.get());
-
-this.diffuseRepeatXUniform=new CGL.Uniform(shader,'f','diffuseRepeatX',self.diffuseRepeatX.get());
-this.diffuseRepeatYUniform=new CGL.Uniform(shader,'f','diffuseRepeatY',self.diffuseRepeatY.get());
-
-this.render.onTriggered=this.doRender;
-this.calcTangents.set(true);
-this.doRender();
-
-
-};
-
-Ops.Gl.Shader.MatCapMaterial.prototype = new CABLES.Op();
 
 //----------------
 
@@ -3670,6 +3086,322 @@ op.onFileChanged=function(fn)
 };
 
 Ops.Gl.Texture.prototype = new CABLES.Op();
+
+//----------------
+
+
+
+// **************************************************************
+// 
+// Ops.Gl.Shader.PointMaterial
+// 
+// **************************************************************
+
+Ops.Gl.Shader.PointMaterial = function()
+{
+CABLES.Op.apply(this,arguments);
+var op=this;
+var attachments={};
+attachments["shader_frag"]="\n{{MODULES_HEAD}}\n\nIN vec2 texCoord;\n#ifdef HAS_TEXTURES\n   \n   #ifdef HAS_TEXTURE_DIFFUSE\n       UNI sampler2D diffTex;\n   #endif\n   #ifdef HAS_TEXTURE_MASK\n       UNI sampler2D texMask;\n   #endif\n#endif\nUNI float r;\nUNI float g;\nUNI float b;\nUNI float a;\n\nvoid main()\n{\n    {{MODULE_BEGIN_FRAG}}\n\n    vec4 col=vec4(r,g,b,a);\n\n    #ifdef HAS_TEXTURES\n\n        #ifdef HAS_TEXTURE_MASK\n            float mask=texture2D(texMask,vec2(gl_PointCoord.x,(1.0-gl_PointCoord.y))).r;\n        #endif\n\n        #ifdef HAS_TEXTURE_DIFFUSE\n\n            #ifdef LOOKUP_TEXTURE\n                col=texture2D(diffTex,texCoord);\n            #endif\n            #ifndef LOOKUP_TEXTURE\n                col=texture2D(diffTex,vec2(gl_PointCoord.x,(1.0-gl_PointCoord.y)));\n            #endif\n\n            #ifdef COLORIZE_TEXTURE\n              col.r*=r;\n              col.g*=g;\n              col.b*=b;\n            #endif\n        #endif\n        col.a*=a;\n    #endif\n\n    {{MODULE_COLOR}}\n\n    #ifdef MAKE_ROUND\n        if ((gl_PointCoord.x-0.5)*(gl_PointCoord.x-0.5) + (gl_PointCoord.y-0.5)*(gl_PointCoord.y-0.5) > 0.25) discard; //col.a=0.0;\n    #endif\n\n    #ifdef HAS_TEXTURE_MASK\n        col.a=mask;\n    #endif\n\n\n    // #ifdef RANDOMIZE_COLOR\n        // col.rgb*=fract(sin(dot(texCoord.xy ,vec2(12.9898,78.233))) * 43758.5453);\n    // #endif\n\n\n\n    outColor = col;\n}\n";
+attachments["shader_vert"]="{{MODULES_HEAD}}\nIN vec3 vPosition;\nIN vec2 attrTexCoord;\n\nOUT vec3 norm;\n#ifdef HAS_TEXTURES\n    OUT vec2 texCoord;\n#endif\n\nUNI mat4 projMatrix;\nUNI mat4 modelMatrix;\nUNI mat4 viewMatrix;\n\nUNI float pointSize;\nUNI vec3 camPos;\n\nUNI float canvasWidth;\nUNI float canvasHeight;\nUNI float camDistMul;\n\nUNI float randomSize;\n\nIN float attrVertIndex;\n\nfloat rand(float n){return fract(sin(n) * 43758.5453123);}\n\n#define POINTMATERIAL\n\nvoid main()\n{\n    float psMul=sqrt(canvasWidth*canvasHeight)*0.001+0.00000000001;\n    float sizeMultiply=1.0;\n\n    #ifdef HAS_TEXTURES\n        texCoord=attrTexCoord;\n    #endif\n    \n    mat4 mMatrix=modelMatrix;\n\n    vec4 pos = vec4( vPosition, 1. );\n\n    {{MODULE_VERTEX_POSITION}}\n\n    vec4 model=mMatrix * pos;\n\n    psMul+=rand(attrVertIndex)*randomSize;\n\n    psMul*=sizeMultiply;\n\n    #ifndef SCALE_BY_DISTANCE\n        gl_PointSize = pointSize * psMul;\n    #endif\n    #ifdef SCALE_BY_DISTANCE\n        float cameraDist = distance(model.xyz, camPos);\n        gl_PointSize = (pointSize / cameraDist) * psMul;\n    #endif\n\n\n\n\n    gl_Position = projMatrix * viewMatrix * model;\n\n\n}\n";
+const cgl=op.patch.cgl;
+
+var render=op.addInPort(new CABLES.Port(op,"render",CABLES.OP_PORT_TYPE_FUNCTION) );
+var trigger=op.outTrigger('trigger');
+var shaderOut=op.addOutPort(new CABLES.Port(op,"shader",CABLES.OP_PORT_TYPE_OBJECT));
+
+var pointSize=op.addInPort(new CABLES.Port(op,"PointSize",CABLES.OP_PORT_TYPE_VALUE));
+var randomSize=op.inValue("Random Size",0);
+
+var makeRound=op.addInPort(new CABLES.Port(op,"Round",CABLES.OP_PORT_TYPE_VALUE,{ display:'bool' }));
+var doScale=op.addInPort(new CABLES.Port(op,"Scale by Distance",CABLES.OP_PORT_TYPE_VALUE,{ display:'bool' }));
+var r=op.addInPort(new CABLES.Port(op,"r",CABLES.OP_PORT_TYPE_VALUE,{ display:'range',colorPick:'true' }));
+var g=op.addInPort(new CABLES.Port(op,"g",CABLES.OP_PORT_TYPE_VALUE,{ display:'range' }));
+var b=op.addInPort(new CABLES.Port(op,"b",CABLES.OP_PORT_TYPE_VALUE,{ display:'range' }));
+var a=op.addInPort(new CABLES.Port(op,"a",CABLES.OP_PORT_TYPE_VALUE,{ display:'range' }));
+var preMultipliedAlpha=op.addInPort(new CABLES.Port(op,"preMultiplied alpha",CABLES.OP_PORT_TYPE_VALUE,{ display:'bool' }));
+
+
+makeRound.set(true);
+doScale.set(false);
+pointSize.set(3);
+
+
+var shader=new CGL.Shader(cgl,'PointMaterial');
+shader.setModules(['MODULE_VERTEX_POSITION','MODULE_COLOR','MODULE_BEGIN_FRAG']);
+
+shader.define('MAKE_ROUND');
+
+var uniPointSize=new CGL.Uniform(shader,'f','pointSize',pointSize);
+var uniRandomSize=new CGL.Uniform(shader,'f','randomSize',randomSize);
+
+
+shaderOut.set(shader);
+shader.setSource(attachments.shader_vert,attachments.shader_frag);
+shader.glPrimitive=cgl.gl.POINTS;
+shader.bindTextures=bindTextures;
+shaderOut.ignoreValueSerialize=true;
+
+r.set(Math.random());
+g.set(Math.random());
+b.set(Math.random());
+a.set(1.0);
+
+r.uniform=new CGL.Uniform(shader,'f','r',r);
+g.uniform=new CGL.Uniform(shader,'f','g',g);
+b.uniform=new CGL.Uniform(shader,'f','b',b);
+a.uniform=new CGL.Uniform(shader,'f','a',a);
+
+var uniWidth=new CGL.Uniform(shader,'f','canvasWidth',cgl.canvasWidth);
+var uniHeight=new CGL.Uniform(shader,'f','canvasHeight',cgl.canvasHeight);
+
+render.onTriggered=doRender;
+
+var texture=op.inTexture("texture");
+var textureUniform=null;
+
+var textureMask=op.inTexture("Texture Mask");
+var textureMaskUniform=null;
+
+op.preRender=function()
+{
+    if(shader)shader.bind();
+    doRender();
+};
+
+function bindTextures()
+{
+    if(texture.get()) cgl.setTexture(0,texture.get().tex);
+    if(textureMask.get()) cgl.setTexture(1,textureMask.get().tex);
+}
+
+function doRender()
+{
+    uniWidth.setValue(cgl.canvasWidth);
+    uniHeight.setValue(cgl.canvasHeight);
+
+    cgl.setShader(shader);
+    bindTextures();
+    if(preMultipliedAlpha.get())cgl.gl.blendFunc(cgl.gl.ONE, cgl.gl.ONE_MINUS_SRC_ALPHA);
+
+    trigger.trigger();
+    if(preMultipliedAlpha.get())cgl.gl.blendFunc(cgl.gl.SRC_ALPHA,cgl.gl.ONE_MINUS_SRC_ALPHA);
+
+    cgl.setPreviousShader();
+}
+
+doScale.onChange=function()
+{
+    if(doScale.get()) shader.define('SCALE_BY_DISTANCE');
+        else shader.removeDefine('SCALE_BY_DISTANCE');
+};
+
+makeRound.onChange=function()
+{
+    if(makeRound.get()) shader.define('MAKE_ROUND');
+        else shader.removeDefine('MAKE_ROUND');
+};
+
+texture.onChange=function()
+{
+    if(texture.get())
+    {
+        if(textureUniform!==null)return;
+        shader.removeUniform('diffTex');
+        shader.define('HAS_TEXTURE_DIFFUSE');
+        textureUniform=new CGL.Uniform(shader,'t','diffTex',0);
+    }
+    else
+    {
+        shader.removeUniform('diffTex');
+        shader.removeDefine('HAS_TEXTURE_DIFFUSE');
+        textureUniform=null;
+    }
+};
+
+textureMask.onChange=function()
+{
+    if(textureMask.get())
+    {
+        if(textureMaskUniform!==null)return;
+        shader.removeUniform('texMask');
+        shader.define('HAS_TEXTURE_MASK');
+        textureMaskUniform=new CGL.Uniform(shader,'t','texMask',1);
+    }
+    else
+    {
+        shader.removeUniform('texMask');
+        shader.removeDefine('HAS_TEXTURE_MASK');
+        textureMaskUniform=null;
+    }
+};
+
+var colorizeTexture=op.addInPort(new CABLES.Port(op,"colorizeTexture",CABLES.OP_PORT_TYPE_VALUE,{ display:'bool' }));
+colorizeTexture.set(false);
+colorizeTexture.onChange=function()
+{
+    if(colorizeTexture.get()) shader.define('COLORIZE_TEXTURE');
+        else shader.removeDefine('COLORIZE_TEXTURE');
+};
+
+var textureLookup=op.addInPort(new CABLES.Port(op,"texture Lookup",CABLES.OP_PORT_TYPE_VALUE,{ display:'bool' }));
+textureLookup.set(false);
+textureLookup.onChange=function()
+{
+    if(textureLookup.get()) shader.define('LOOKUP_TEXTURE');
+        else shader.removeDefine('LOOKUP_TEXTURE');
+};
+
+
+
+};
+
+Ops.Gl.Shader.PointMaterial.prototype = new CABLES.Op();
+
+//----------------
+
+
+
+// **************************************************************
+// 
+// Ops.Gl.Shader.WireframeMaterial
+// 
+// **************************************************************
+
+Ops.Gl.Shader.WireframeMaterial = function()
+{
+CABLES.Op.apply(this,arguments);
+var op=this;
+var attachments={};
+attachments["wireframe_frag"]="IN vec3 barycentric;\nUNI float width;\nUNI float opacity;\nUNI float r,g,b;\nUNI float fr,fg,fb;\nIN vec3 norm;\n\nfloat edgeFactor()\n{\n    vec3 d = fwidth(barycentric);\n    vec3 a3 = smoothstep(vec3(0.0), d*width*4.0, barycentric);\n    return min(min(a3.x, a3.y), a3.z);\n}\n\nvoid main()\n{\n    vec4 col;\n\n    #ifdef WIREFRAME_FILL\n        float v=opacity*(1.0-edgeFactor())*0.95;\n        vec3 wire = vec3(fr, fg, fb);\n        col.rgb = vec3(r, g, b);\n        col.rgb = mix(wire,col.rgb,v);\n        col.a = opacity;\n    #endif\n\n    #ifndef WIREFRAME_FILL\n       col = vec4(r,g,b, opacity*(1.0-edgeFactor())*0.95);\n    #endif\n    \n    // col=vec4(barycentric,1.0);\n    \n    outColor=col;\n\n}";
+attachments["wireframe_vert"]="{{MODULES_HEAD}}\n\nIN vec3 vPosition;\nIN vec3 attrBarycentric;\nUNI mat4 projMatrix;\nUNI mat4 modelMatrix;\nUNI mat4 viewMatrix;\nOUT vec3 barycentric;\nIN vec2 attrTexCoord;\nOUT vec2 texCoord;\n\nIN vec3 attrVertNormal;\nOUT vec3 norm;\n\nvoid main()\n{\n    norm=attrVertNormal;\n    texCoord=attrTexCoord;\n    barycentric=attrBarycentric;\n    vec4 pos = vec4( vPosition, 1. );\n    {{MODULE_VERTEX_POSITION}}\n    gl_Position = projMatrix * viewMatrix * modelMatrix * pos;\n}\n";
+var cgl=op.patch.cgl;
+
+var render=op.addInPort(new CABLES.Port(op,"render",CABLES.OP_PORT_TYPE_FUNCTION) );
+var trigger=op.outTrigger('trigger');
+
+var enableDepth=op.addInPort(new CABLES.Port(op,"enable depth testing",CABLES.OP_PORT_TYPE_VALUE,{ display:'bool' }));
+enableDepth.set(true);
+
+var fill=op.addInPort(new CABLES.Port(op,"fill",CABLES.OP_PORT_TYPE_VALUE,{ display:'bool' }));
+fill.set(true);
+
+function setDefines()
+{
+    if(shader)
+        if(fill.get()) shader.define('WIREFRAME_FILL');
+            else shader.removeDefine('WIREFRAME_FILL');
+}
+fill.onChange=function()
+{
+    setDefines();
+};
+
+var w=op.addInPort(new CABLES.Port(op,"width",CABLES.OP_PORT_TYPE_VALUE,{ display:'range' }));
+w.set(0.25);
+w.onChange=function(){ uniformWidth.setValue(w.get()); };
+
+var opacity=op.addInPort(new CABLES.Port(op,"opacity",CABLES.OP_PORT_TYPE_VALUE,{ display:'range' }));
+opacity.set(1.0);
+opacity.onChange=function(){ uniformOpacity.setValue(opacity.get()); };
+
+if(cgl.glVersion==1 && !cgl.gl.getExtension('OES_standard_derivatives') )
+{
+    op.uiAttr( { 'error': 'no oes standart derivatives!' } );
+}
+else
+{
+    op.uiAttr( { 'error': null } );
+}
+
+
+
+
+var doRender=function()
+{
+    // if(true!==enableDepth.get()) cgl.gl.disable(cgl.gl.DEPTH_TEST);
+        // else cgl.gl.enable(cgl.gl.DEPTH_TEST);
+    cgl.pushDepthTest(enableDepth.get());
+
+    cgl.setShader(shader);
+    trigger.trigger();
+    cgl.setPreviousShader();
+
+    // if(true!==enableDepth.get()) cgl.gl.enable(cgl.gl.DEPTH_TEST);
+    cgl.popDepthTest();
+
+};
+
+var shader=new CGL.Shader(cgl,'Wireframe Material');
+
+if(cgl.glVersion>1)shader.glslVersion=300;
+var uniformWidth=new CGL.Uniform(shader,'f','width',w.get());
+var uniformOpacity=new CGL.Uniform(shader,'f','opacity',opacity.get());
+
+if(cgl.glVersion==1)shader.enableExtension('OES_standard_derivatives');
+
+shader.setSource(attachments.wireframe_vert||'',attachments.wireframe_frag||'');
+shader.setModules(['MODULE_VERTEX_POSITION','MODULE_COLOR','MODULE_BEGIN_FRAG']);
+shader.wireframe=true;
+setDefines();
+
+{
+    // diffuse color
+
+    var r=op.addInPort(new CABLES.Port(op,"diffuse r",CABLES.OP_PORT_TYPE_VALUE,{ display:'range', colorPick:'true' }));
+    r.onChange=function()
+    {
+        if(!r.uniform) r.uniform=new CGL.Uniform(shader,'f','r',r.get());
+        else r.uniform.setValue(r.get());
+    };
+
+    var g=op.addInPort(new CABLES.Port(op,"diffuse g",CABLES.OP_PORT_TYPE_VALUE,{ display:'range' }));
+    g.onChange=function()
+    {
+        if(!g.uniform) g.uniform=new CGL.Uniform(shader,'f','g',g.get());
+        else g.uniform.setValue(g.get());
+    };
+
+    var b=op.addInPort(new CABLES.Port(op,"diffuse b",CABLES.OP_PORT_TYPE_VALUE,{ display:'range' }));
+    b.onChange=function()
+    {
+        if(!b.uniform) b.uniform=new CGL.Uniform(shader,'f','b',b.get());
+        else b.uniform.setValue(b.get());
+    };
+
+    r.set(Math.random());
+    g.set(Math.random());
+    b.set(Math.random());
+}
+
+{
+    // diffuse color
+
+    var fr=op.addInPort(new CABLES.Port(op,"Fill R",CABLES.OP_PORT_TYPE_VALUE,{ display:'range', colorPick:'true' }));
+    fr.uniform=new CGL.Uniform(shader,'f','fr',fr);
+
+    var fg=op.addInPort(new CABLES.Port(op,"Fill G",CABLES.OP_PORT_TYPE_VALUE,{ display:'range' }));
+    fg.uniform=new CGL.Uniform(shader,'f','fg',fg);
+
+    var fb=op.addInPort(new CABLES.Port(op,"Fill B",CABLES.OP_PORT_TYPE_VALUE,{ display:'range' }));
+    fb.uniform=new CGL.Uniform(shader,'f','fb',fb);
+
+    fr.set(0);
+    fg.set(0);
+    fb.set(0);
+}
+
+
+
+
+render.onTriggered=doRender;
+
+doRender();
+
+
+};
+
+Ops.Gl.Shader.WireframeMaterial.prototype = new CABLES.Op();
 
 //----------------
 
