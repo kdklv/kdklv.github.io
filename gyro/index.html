@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>gyro</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <style>
+        body { 
+            margin: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: Helvetica, Arial, sans-serif;
+		    -webkit-tap-highlight-color: rgba(0,0,0,0); /* hide grey rectangle on iOS touch */
+			
+        }
+        canvas {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <canvas id="glcanvas" width="100vw" height="100vh"></canvas>
+
+
+    <script type="text/javascript" src="js/libs.core.min.js"></script>
+    <script type="text/javascript" src="js/cables.min.js"></script>
+    
+    <script type="text/javascript" src="js/ops.js"></script>
+    
+    <script>
+        /**
+         * Called when there was a cables error.
+         * @param {string} errId - ID of the error, e.g. 'NO_WEBGL' or 'NO_WEBAUDIO' 
+         *                         when the browser does not support the used APIs
+         * @param {string} errMsg - The error message
+         */
+        function showError(errId, errMsg) {
+            alert('An error occured: ' + errId + ', ' + errMsg);
+        }
+
+        function patchInitialized() {
+            // You can now access the patch object (CABLES.patch), register variable watchers and so on
+        }
+
+        function patchFinishedLoading() {
+            // The patch is ready now, all assets have been loaded
+        }
+
+        document.addEventListener('DOMContentLoaded', function(event) {
+            CABLES.patch = new CABLES.Patch({
+                patchFile: 'js/txt_gyro.json',
+                prefixAssetPath: '',
+                glCanvasId: 'glcanvas',
+                glCanvasResizeToWindow: true,
+                onError: showError,
+                onPatchLoaded: patchInitialized,
+                onFinishedLoading: patchFinishedLoading,
+            });
+        });
+		
+		function preventBehavior(e) {
+		  e.preventDefault(); 
+		};
+
+		var canvas = document.getElementById('glcanvas');
+		canvas.addEventListener('touchmove', preventBehavior, false);
+    </script>
+</body>
+</html>
