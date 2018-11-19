@@ -1,0 +1,51 @@
+main {
+  height: 200vh;
+  
+}
+body {
+  display: flex;
+  color: white;
+}
+
+.box {
+ display: inline-block;
+ padding: 10px;
+ font-family: system-ui;
+}
+
+.box-1 {
+  background-color: red;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.box-2 {
+    background-color: black;
+    position: absolute;
+  width: 15vw;
+  left: 10vw;
+  top: 50vh;
+}
+
+.box-3 {
+    background-color: black;
+    position: absolute;
+  left: 50vw;
+  top: 10vh;
+}
+
+.box-4 {
+    background-color: black;
+    position: fixed;
+  left: 70vw;
+  top: 50vh;
+}
+
+
+.box-5 {
+    background-color: red;
+    position: absolute;
+  left: 45vw;
+  top: 120vh;
+}
