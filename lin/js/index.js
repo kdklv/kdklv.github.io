@@ -1,6 +1,6 @@
 const line = new LeaderLine(
   document.querySelector('.box-1'),
-  document.querySelector('.box-2'),
+document.querySelector('.box-2'),    
     { 
       size: 1,
      path : 'straight',
@@ -44,8 +44,8 @@ const line3 = new LeaderLine(
 )
 
 const line4 = new LeaderLine(
-  document.querySelector('.box-5'),
-  document.querySelector('.box-4'), 
+  document.querySelector('.box-1'),
+  document.querySelector('.box-5'), 
     { 
       size: 1,
      path : 'straight',

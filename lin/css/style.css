@@ -1,7 +1,8 @@
 main {
   height: 200vh;
-  
+  width: 200vw;
 }
+
 body {
   display: flex;
   color: white;
@@ -10,7 +11,7 @@ body {
 .box {
  display: inline-block;
  padding: 10px;
- font-family: system-ui;
+ font-family: sans-serif;
 }
 
 .box-1 {
@@ -46,6 +47,7 @@ body {
 .box-5 {
     background-color: red;
     position: absolute;
-  left: 45vw;
+  width: 15vw;
+  left: 145vw;
   top: 120vh;
 }
