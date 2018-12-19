@@ -10,7 +10,7 @@ document.querySelector('.box-2'),
      endPlug : 'disc',
       startSocket: 'right', 
       endSocket: 'left'
-  }
+  } 
 );
 addEventListener('scroll', AnimEvent.add(function() {
   if (line) { line.position(); }
