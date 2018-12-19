@@ -11,10 +11,7 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
 	top: 2vh;
 	border-radius: 25px;
 	z-index: 1;
-
-  
-  
-  }
+}
 
 body {
 	--color-text: #000;
