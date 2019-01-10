@@ -233,6 +233,7 @@ a {
 .selections {
     position: absolute;
     z-index: 1000;
+
 }
 
 
@@ -271,6 +272,8 @@ a {
     bottom: -4px;
     right: 0;
     z-index: 100000;
+    font-size: 1vh;
+
 
 }
 
