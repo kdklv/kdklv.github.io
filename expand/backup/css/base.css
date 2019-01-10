@@ -4,6 +4,21 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
 *::before {
 	box-sizing: border-box;
 }
+.box-1 {
+	left: 1vw;
+	top: 1vh;
+	position: fixed;
+	z-index: 2;
+}
+.box-0 {
+	background-color: red;
+	position: fixed;
+	padding: 0.5vh;
+	left: 0.5vw;
+	top: 0.5vh;
+	border-radius: 100%;
+	z-index: 3;
+}
 
 body {
 	--color-text: #000;
@@ -19,6 +34,7 @@ body {
 	color: var(--color-text);
 	background-color: #fff;
 	background-color: var(--color-bg);
+	-webkit-overflow-scrolling: touch;
 }
 
 /* Page Loader */
@@ -99,14 +115,14 @@ main {
 }
 
 /* Header */
-.codrops-header {
+.tsts-header {
 	position: relative;
-	z-index: 100;
+	z-index: 1s;
 	text-align: center;
 	font-size: 1rem;
 }
 
-.codrops-header__title {
+.tsts-header__title {
 	font-size: 3rem;
 	font-weight: bold;
 	margin: 0;
@@ -141,7 +157,7 @@ main {
 }
 
 /* Top Navigation Style */
-.codrops-links {
+.tsts-links {
 	position: relative;
 	display: flex;
 	justify-content: center;
@@ -149,7 +165,7 @@ main {
 	white-space: nowrap;
 }
 
-.codrops-icon {
+.tsts-icon {
 	display: inline-block;
 	margin: 0.15em;
 	padding: 0.25em;
@@ -171,6 +187,8 @@ main {
 	margin: 0 auto;
 	position: relative;
 	display: none;
+	z-index: 2;
+
 }
 
 .js .grid {
@@ -217,7 +235,7 @@ main {
 .grid__item-title {
 	font-weight: normal;
 	position: absolute;
-	left: 0;
+	left: 1vw;
 	top: 0;
 	margin: 0 0 0 1rem;
 	-webkit-writing-mode: vertical-rl;
@@ -227,7 +245,7 @@ main {
 }
 
 .grid__item-number {
-	font-weight: bold;
+	font-weight: normal;
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -330,8 +348,10 @@ main {
 
 .content__close {
 	position: absolute;
-	top: 0.75rem;
-	left: 50%;
+	font-size: 2rem;
+	font-weight: bold;
+	top: 2rem;
+	left: 95%;
 	z-index: 10000;
 	transform: translateX(-50%);
 	background: none;
@@ -364,7 +384,7 @@ main {
 .content__indicator {
 	opacity: 0;
 }
-
+ 
 @media screen and (min-width: 55em) {
 	.frame {
 		display: grid;
@@ -373,7 +393,7 @@ main {
 		grid-template-columns: 40% 60%;
 		grid-template-areas: 'title header';
 	}
-	.codrops-header {
+	.tsts-header {
 		grid-area: header;
 		justify-self: end;
 		display: flex;
@@ -382,7 +402,7 @@ main {
 		align-items: center;
 		text-align: left;
 	}
-	.codrops-links {
+	.tsts-links {
 		margin: 0 0 0 1.5rem;
 	}
 	.title {
@@ -421,8 +441,12 @@ main {
   		column-gap: 20px;
   	}
 	.content__item-img {
-		max-width: none;
-		height: calc(100vh - 6rem);
+		max-height: 90vh;
+		max-width: 90vw;
+
+		align-items: center;
+		
+
 	}
 	.content__item-subtitle {
 		max-width: 50%;

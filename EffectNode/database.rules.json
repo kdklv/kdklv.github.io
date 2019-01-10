@@ -1,0 +1,29 @@
+{
+  "rules": {
+    "html-acl": {
+      "$usr": {
+        ".read": "$usr === auth.uid",
+        "$prj": {
+          ".read": "$usr === auth.uid",
+          ".write": "$usr === auth.uid"
+        }
+      }
+    },
+    "html-db": {
+      "$usr": {
+        "$prj": {
+          ".read": true,
+          ".write": "root.child('html-acl' + '/' + $usr + '/' + $prj).val() === true"
+        }
+      }
+    },
+    "refresh-db": {
+      "$usr": {
+        "$prj": {
+          ".read": true,
+          ".write": "root.child('html-acl' + '/' + $usr + '/' + $prj).val() === true"
+        }
+      }
+    }
+  }
+}

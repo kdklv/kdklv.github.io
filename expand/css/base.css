@@ -5,12 +5,19 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
 	box-sizing: border-box;
 }
 .box-1 {
+	left: 1vw;
+	top: 1vh;
+	position: fixed;
+	z-index: 2;
+}
+.box-0 {
 	background-color: red;
 	position: fixed;
-	left: 2vw;
-	top: 2vh;
-	border-radius: 25px;
-	z-index: 1;
+	padding: 0.5vh;
+	left: 0.5vw;
+	top: 0.5vh;
+	border-radius: 100%;
+	z-index: 3;
 }
 
 body {
@@ -27,6 +34,7 @@ body {
 	color: var(--color-text);
 	background-color: #fff;
 	background-color: var(--color-bg);
+	-webkit-overflow-scrolling: touch;
 }
 
 /* Page Loader */
