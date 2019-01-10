@@ -24,18 +24,18 @@ if (window.innerHeight < window.innerWidth) {
 var bg_img = false;
         
 var content = [
-    "Ginto",
+    "Gucci",
     "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
     "Z-Ro  Tay Dizm  Chali 2na TeeCee4800  Jayo Felony Flii Stylz YFN Lucci Vakill Nu Jerzey  Devil  MadeinTYO Cap 1  Uncle Murda  SwizZz One Be Lo  Smif-N-Wessun Royce da 5'9&#34;  Soopafly Keak Da Sneak  Slim Thug Ma$e  Neef Buck  Kurupt",
     "№ 0123456789 ❶❷❸❹❺❻❼❽❾❿ ①②③④⑤⑥⑦⑧⑨⑩ ½⅓⅔¼¾ ⁰¹²³⁴⁵⁶⁷⁸⁹",
     "〈〉【】{}[]「」《》()〔〕『』",
     "▲▶▼◀ △▷▽◁ ↑↗→↘↓↙←↖ ↤↥↦↧↰↱↲↳",
     ".,:;!¡?¿@&#%‰<br> $¢€₿£¥©®℗™℮<br> 〈〉【】{}[]「」《》()〔〕『』",
-    "Oh ₿¥<br> Ginto"
+    "Oh ₿¥<br> Gucci"
 ];
         
 var tool_prev;
-var tool = 1;
+var tool = 6;
 var num_words;
 var num_letters;
 var audioContent;
@@ -264,7 +264,7 @@ function change_tool(this_tool) {
 
     if (this_tool == 6) {
 
-        $('#main_txt')[0].innerHTML = "<span>Ginto</span><br><span>Ginto</span><br><span>Ginto</span><br><span>Ginto</span><br><span>Ginto</span><br><span>Ginto</span>"
+        $('#main_txt')[0].innerHTML = "<span>Gucci</span><br><span>Gucci</span><br><span>Gucci</span><br><span>Gucci</span><br><span>Gucci</span><br><span>Gucci</span>"
         $("#main_txt").css('font-size','4.2rem').css('line-height','3.7rem').css('white-space','nowrap');
         $('#main_txt span').addClass("ginto1");
 
@@ -465,8 +465,8 @@ function update_name() {
         var name_ital = getBruch(cur_ital) + " Italic";
     }
 
-    $('#ginto_font_name span')[0].innerHTML = "Ginto " + name_wght + " " + name_wdth + " " + name_ital;
-    $('#ginto_font_name span')[1].innerHTML = "Ginto " + cur_wght + " " + cur_wdth + " " + cur_ital;
+    $('#ginto_font_name span')[0].innerHTML = "Gucci " + name_wght + " " + name_wdth + " " + name_ital;
+    $('#ginto_font_name span')[1].innerHTML = "Gucci " + cur_wght + " " + cur_wdth + " " + cur_ital;
 }
 
 function getBruch(perc) {
