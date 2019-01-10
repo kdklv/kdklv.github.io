@@ -11,12 +11,11 @@ Ops.Math=Ops.Math || {};
 Ops.Array=Ops.Array || {};
 Ops.Exp.Gl=Ops.Exp.Gl || {};
 Ops.Trigger=Ops.Trigger || {};
-Ops.Gl.Matrix=Ops.Gl.Matrix || {};
 Ops.Gl.Meshes=Ops.Gl.Meshes || {};
+Ops.Gl.Matrix=Ops.Gl.Matrix || {};
 Ops.Gl.Shader=Ops.Gl.Shader || {};
 Ops.Gl.Textures=Ops.Gl.Textures || {};
 Ops.Gl.ShaderEffects=Ops.Gl.ShaderEffects || {};
-Ops.Exp.Gl.ShaderEffects=Ops.Exp.Gl.ShaderEffects || {};
 
 
 
@@ -2582,103 +2581,6 @@ initialRadius.set(0.05);
 
 Ops.Gl.Matrix.OrbitControls.prototype = new CABLES.Op();
 CABLES.OPS["eaf4f7ce-08a3-4d1b-b9f4-ebc0b7b1cde1"]={f:Ops.Gl.Matrix.OrbitControls,objName:"Ops.Gl.Matrix.OrbitControls"};
-
-
-
-
-// **************************************************************
-// 
-// Ops.Exp.Gl.ShaderEffects.AreaRotate
-// 
-// **************************************************************
-
-Ops.Exp.Gl.ShaderEffects.AreaRotate = function()
-{
-CABLES.Op.apply(this,arguments);
-const op=this;
-const attachments={area_rotate_vert:"\nUNI bool MOD_smooth;\nUNI float MOD_x,MOD_y,MOD_z;\nUNI float MOD_strength;\nUNI float MOD_size;\n\nvec4 MOD_scaler(vec4 pos,mat4 modelMatrix)\n{\n    vec3 forcePos=vec3(MOD_x,MOD_y,MOD_z);\n    vec3 vecToOrigin=(modelMatrix*pos).xyz-forcePos;\n    float dist=abs(length(vecToOrigin));\n    float distAlpha = (MOD_size - dist) ;\n\n    if(MOD_smooth) distAlpha=smoothstep(0.0,MOD_size,distAlpha);\n    \n    // pos.xyz*=(1.0+(distAlpha*MOD_strength));\n\n    mat3 rotation = mat3(\n        vec3( cos(MOD_strength*distAlpha),  sin(MOD_strength*distAlpha),  0.0),\n        vec3(-sin(MOD_strength*distAlpha),  cos(MOD_strength*distAlpha),  0.0),\n        vec3(        0.0,         0.0,  1.0)\n    );\n    pos =vec4(rotation * pos.xyz, 1.0);\n\n\n    return pos;\n}\n",};
-
-var cgl=op.patch.cgl;
-
-op.render=op.addInPort(new CABLES.Port(this,"render",CABLES.OP_PORT_TYPE_FUNCTION));
-op.trigger=op.addOutPort(new CABLES.Port(this,"trigger",CABLES.OP_PORT_TYPE_FUNCTION));
-
-var inSize=op.inValue("Size",1);
-var inStrength=op.inValue("Strength",1);
-var inSmooth=op.inValueBool("Smooth",true);
-
-var x=op.inValue("x");
-var y=op.inValue("y");
-var z=op.inValue("z");
-
-var shader=null;
-
-var srcHeadVert=attachments.area_rotate_vert;
-
-var srcBodyVert=''
-    .endl()+'pos=MOD_scaler(pos,mMatrix);'
-    .endl();
-    
-var moduleVert=null;
-
-function removeModule()
-{
-    if(shader && moduleVert) shader.removeModule(moduleVert);
-    shader=null;
-}
-
-
-op.render.onLinkChanged=removeModule;
-
-op.render.onTriggered=function()
-{
-    if(!cgl.getShader())
-    {
-         op.trigger.trigger();
-         return;
-    }
-    
-    if(CABLES.UI && gui.patch().isCurrentOp(op)) 
-        gui.setTransformGizmo(
-            {
-                posX:x,
-                posY:y,
-                posZ:z
-            });
-
-    if(cgl.getShader()!=shader)
-    {
-        if(shader) removeModule();
-        shader=cgl.getShader();
-
-        moduleVert=shader.addModule(
-            {
-                title:op.objName,
-                name:'MODULE_VERTEX_POSITION',
-                srcHeadVert:srcHeadVert,
-                srcBodyVert:srcBodyVert
-            });
-
-        inSize.uniform=new CGL.Uniform(shader,'f',moduleVert.prefix+'size',inSize);
-        inStrength.uniform=new CGL.Uniform(shader,'f',moduleVert.prefix+'strength',inStrength);
-        inSmooth.uniform=new CGL.Uniform(shader,'f',moduleVert.prefix+'smooth',inSmooth);
-
-        x.uniform=new CGL.Uniform(shader,'f',moduleVert.prefix+'x',x);
-        y.uniform=new CGL.Uniform(shader,'f',moduleVert.prefix+'y',y);
-        z.uniform=new CGL.Uniform(shader,'f',moduleVert.prefix+'z',z);
-    }
-    
-    
-    if(!shader)return;
-
-    op.trigger.trigger();
-};
-
-
-};
-
-Ops.Exp.Gl.ShaderEffects.AreaRotate.prototype = new CABLES.Op();
-CABLES.OPS["8de665f1-0fc5-466c-8819-b73e17560ccf"]={f:Ops.Exp.Gl.ShaderEffects.AreaRotate,objName:"Ops.Exp.Gl.ShaderEffects.AreaRotate"};
 
 
 
