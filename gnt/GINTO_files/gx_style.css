@@ -1,0 +1,401 @@
+@font-face {
+  font-family: "ginto1";
+  src: url("./fonts/p1.ttf");
+}
+@font-face {
+  font-family: "ginto2";
+  src: url("./fonts/p2.ttf");
+}
+@font-face {
+  font-family: "ginto3";
+  src: url("./fonts/p3.ttf");
+}
+@font-face {
+  font-family: "ginto_wght";
+  src: url("./fonts/wght.ttf");
+}
+
+
+	
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+}
+
+
+.ginto1 {
+	font-family: "ginto1";
+}
+.ginto2 {
+	font-family: "ginto2";
+}
+.ginto3 {
+	font-family: "ginto3";
+}
+.ginto_wght {
+	font-family: "ginto_wght";
+}
+
+
+
+
+
+
+#variable input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 0px solid #000000;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background: #000000;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: 0px;
+}
+#variable input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 0px solid #000000;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background: #000000;
+  cursor: pointer;
+}
+#variable input[type=range]::-ms-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 0px solid #000000;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background: #000000;
+  cursor: pointer;
+}
+#variable input.white::-webkit-slider-thumb {
+  background: #ffffff;
+}
+#variable input.white::-moz-range-thumb {
+  background: #ffffff;
+}
+#variable input.white::-ms-thumb {
+  background: #ffffff;
+}
+
+#variable input.disabled::-webkit-slider-thumb {
+  background: #cccccc;
+}
+#variable input.disabled::-moz-range-thumb {
+  background: #cccccc;
+}
+#variable input.disabled::-ms-thumb {
+  background: #cccccc;
+}
+#variable input.white.disabled::-webkit-slider-thumb {
+  background: #aaaaaa;
+}
+#variable input.white.disabled::-moz-range-thumb {
+  background: #aaaaaa;
+}
+#variable input.white.disabled::-ms-thumb {
+  background: #aaaaaa;
+}
+#variable input[type=range] {
+  -webkit-appearance: none;
+}
+#variable input[type=range]:focus {
+  outline: none;
+}
+#variable input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 16px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0 0px 7px rgba(0,0,0,0.25);
+  background: rgba(255,255,255,0.3);
+  border-radius: 8px;
+  border: 0px solid #000101;
+}
+#variable input[type=range]::-ms-track {
+  width: 100%;
+  height: 16px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  border-width: 39px 0;
+  color: transparent;
+}
+#variable input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 16px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  background: rgba(255,255,255,0.3);
+  border-radius: 8px;
+  border: 0px solid #000101;
+}
+
+#variable input[type=range]:focus::-webkit-slider-runnable-track {
+  background: rgba(255,255,255,0.3);
+}
+#variable input[type=range]::-ms-fill-lower {
+  background: rgba(255,255,255,0.3);
+  border: 0px solid #000101;
+  border-radius: 50px;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+#variable input[type=range]::-ms-fill-upper {
+  background: rgba(255,255,255,0.3);
+  border: 0px solid #000101;
+  border-radius: 50px;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+#variable input[type=range]:focus::-ms-fill-lower {
+  background: rgba(255,255,255,0.3);
+}
+#variable input[type=range]:focus::-ms-fill-upper {
+  background: rgba(255,255,255,0.3);
+}
+#variable input {
+    background-color: transparent;
+}
+
+
+
+
+
+/*
+::-moz-selection {
+background: blue;
+color: black;
+} 
+
+::selection {
+background: blue;
+color: black;
+}
+*/
+
+
+
+
+
+
+
+
+#variable {          
+    font-kerning: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility; 
+    -moz-font-feature-settings: "kern=1"; 
+    -ms-font-feature-settings: "kern" 1; 
+
+    position: relative;
+/*
+    top: 20px;
+    left: 20px;
+    margin-left: 20px;
+    padding: 20px;
+*/
+    
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    overflow: hidden;
+}
+
+
+
+
+.dinamo_website {
+    font-size: 14px;
+    letter-spacing: .6px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+.emoti {
+    font-size: 1.7rem;
+}
+.emoti .update {
+    font-size: 2rem;
+}
+#steps {
+    list-style: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+}       
+a {
+    cursor: pointer;
+}
+.selections {
+    position: absolute;
+    z-index: 1000;
+}
+
+
+
+/*––––– main_text ––––––*/
+
+#variable .text_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    width: 100%;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#variable .text_container div {
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: calc(100% - 10px);
+    padding: 10px;
+}
+
+
+
+
+/*––––– tool_selection ––––––*/
+
+#tool_selection {
+    position: absolute;
+    bottom: -4px;
+    right: 0;
+    z-index: 100000;
+
+}
+
+#tool_selection div {
+    display: inline;
+
+}
+#tool_selection label {
+    margin-left: -5px;
+}
+
+
+
+#variable input[type=radio] {
+   position: absolute;
+   top: -9999px;
+   left: -9999px;
+}
+#variable input[type=radio]:checked ~ label.unchecked {
+    display: none;
+}
+#variable input[type=radio]:not(:checked) ~ label.checked {
+    display: none;
+}
+
+
+
+@media (min-width: 767px){
+    #variable input[type=radio]:hover ~ label.unchecked {
+        display: none;
+    }
+    #variable input[type=radio]:hover ~ label.checked {
+        display: inline;
+    }
+
+}
+
+
+/*––––– tool_1 – Inputs ––––––*/
+
+#tool_1 {
+    top: 0;
+    right: 0;
+}
+.range_input {
+    width: 200px;
+    margin: 2px;
+}
+#input_wght.short {
+    width: 154px;
+}
+
+@media (min-width: 767px){
+    #change_selection {
+        top: 0;
+        left: 0;
+    }
+}
+
+#change_selection div {
+    display: inline;
+}
+#ginto_font_name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+
+
+/*––––– tool_2 – MICROPHONE ––––––*/
+
+
+#visualizer {
+    position: absolute;
+    width: 100%;
+    height: 300px;
+    bottom: 0;
+/*            z-index: -1;*/
+    pointer-events: none;
+}
+path {
+    stroke-linecap: square;
+    stroke: white;
+    stroke-width: 0.5px;
+}
+
+
+
+
+@media only screen and (max-width: 767px){
+    
+/*
+    #variable {
+        height: calc(100vh - 100px);
+    }
+*/
+    
+    
+    
+    #change_content {
+        display: none !important;
+    }
+    #main_txt {
+        overflow: hidden;
+    }
+    .range_input {
+        width: 100%;
+    }
+    #input_wght.short {
+        width: calc(0.77 * (100% - 4px));
+    }
+    #tool_1 {
+        width: calc(100% - 4px);
+        left: 0px;
+    }
+    #change_selection {
+        bottom: 7px;
+        left: 10px;
+    }
+/*
+    #ginto_font_name {
+        bottom: 0px;
+    }
+*/
+}
+
+        
