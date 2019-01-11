@@ -1,0 +1,179 @@
+@import url(https://fonts.googleapis.com/css?family=IBM+Plex+Sans);
+html, body {
+  position: relative;
+  height: 100%;
+  background: #fff;
+  color: #000;
+}
+
+.home {
+  color: #000;
+}
+
+.home, .contact, .about, .team, .projects, .content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+section {
+  -webkit-transform-origin: bottom right;
+          transform-origin: bottom right;
+  transition: border-radius 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, border-radius 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  will-change: transform;
+  cursor: pointer;
+  /*&:before {
+  	display: block;
+  	content: "";
+  	position: absolute;
+  	top: 0;
+  	left: 0;
+  	right: 0;
+  	bottom: 0;
+  	box-shadow: 0 $line-height/2 $line-height rgba(black, .5);
+  }*/
+}
+section.on {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+          transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+  border-top-left-radius: 0;
+}
+section.on .content {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+          transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+}
+section.on ~ section {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(100%, 100%, 0);
+          transform: scale3d(1, 1, 1) translate3d(100%, 100%, 0);
+}
+section:nth-child(2) {
+  background: #ddd;
+  -webkit-transform: scale3d(0.95, 1, 1) translate3d(0, 60px, 0);
+          transform: scale3d(0.95, 1, 1) translate3d(0, 60px, 0);
+}
+section:nth-child(2) .content {
+  -webkit-transform: scale3d(1.05, 1, 1);
+          transform: scale3d(1.05, 1, 1);
+}
+section.on {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+          transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+  border-top-left-radius: 0;
+}
+section.on .content {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+          transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+}
+section.on ~ section {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(100%, 100%, 0);
+          transform: scale3d(1, 1, 1) translate3d(100%, 100%, 0);
+}
+section:nth-child(3) {
+  background: #ccc;
+  -webkit-transform: scale3d(0.9, 1, 1) translate3d(0, 120px, 0);
+          transform: scale3d(0.9, 1, 1) translate3d(0, 120px, 0);
+}
+section:nth-child(3) .content {
+  -webkit-transform: scale3d(1.1, 1, 1);
+          transform: scale3d(1.1, 1, 1);
+}
+section.on {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+          transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+  border-top-left-radius: 0;
+}
+section.on .content {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+          transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+}
+section.on ~ section {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(100%, 100%, 0);
+          transform: scale3d(1, 1, 1) translate3d(100%, 100%, 0);
+}
+section:nth-child(4) {
+  background: #bbb;
+  -webkit-transform: scale3d(0.85, 1, 1) translate3d(0, 180px, 0);
+          transform: scale3d(0.85, 1, 1) translate3d(0, 180px, 0);
+}
+section:nth-child(4) .content {
+  -webkit-transform: scale3d(1.15, 1, 1);
+          transform: scale3d(1.15, 1, 1);
+}
+section.on {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+          transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+  border-top-left-radius: 0;
+}
+section.on .content {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+          transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+}
+section.on ~ section {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(100%, 100%, 0);
+          transform: scale3d(1, 1, 1) translate3d(100%, 100%, 0);
+}
+section:nth-child(5) {
+  background: #aaa;
+  -webkit-transform: scale3d(0.8, 1, 1) translate3d(0, 240px, 0);
+          transform: scale3d(0.8, 1, 1) translate3d(0, 240px, 0);
+}
+section:nth-child(5) .content {
+  -webkit-transform: scale3d(1.2, 1, 1);
+          transform: scale3d(1.2, 1, 1);
+}
+section.on {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+          transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+  border-top-left-radius: 0;
+}
+section.on .content {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+          transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+}
+section.on ~ section {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(100%, 100%, 0);
+          transform: scale3d(1, 1, 1) translate3d(100%, 100%, 0);
+}
+
+.content {
+  -webkit-transform-origin: top left;
+          transform-origin: top left;
+  transition: border-radius 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, border-radius 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+
+h1 {
+  display: inline-block;
+  font: 40px/80px 'IBM Plex Sans', sans-serif;
+  padding: 0 60px;
+  margin: 10px;
+  border-radius: 60px;
+  -webkit-transform: scale3d(0.5, 0.5, 0.5);
+          transform: scale3d(0.5, 0.5, 0.5);
+  -webkit-transform-origin: top left;
+          transform-origin: top left;
+  background: rgba(43, 43, 43, 0.1);
+  transition: background 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+h1:hover {
+  background: rgba(43, 43, 43, 0.25);
+  transition: background 0.075s ease-in-out, -webkit-transform 0.3s ease-in-out;
+  transition: background 0.075s ease-in-out, transform 0.3s ease-in-out;
+  transition: background 0.075s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+.on h1 {
+  -webkit-transform: scale3d(1, 1, 1) translate3d(-30px, 0, 0);
+          transform: scale3d(1, 1, 1) translate3d(-30px, 0, 0);
+  background: rgba(43, 43, 43, 0);
+}

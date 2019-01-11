@@ -1,0 +1,126 @@
+$pages : 5;
+$line-height: 60px;
+$radius : $line-height/4;
+$easing : ease-in-out;
+$transition : .3s;
+
+$black  : #2B2B2B;
+$white  : #F7F6F0;
+$red : #C6796F;
+$orange	: #CD9D6A;
+$yellow : #C8B26A;
+$green : #83B764;
+$teal : #77C099;
+
+$colors : $black, $red, $orange, $yellow, $green, $teal;
+
+@import url(https://fonts.googleapis.com/css?family=Alegreya+Sans:400,500,700,300);
+
+@mixin scheme($background, $color) {
+	background: $background;
+	color: $color;
+}
+
+html, body { 
+	position: relative;
+	height: 100%;
+	background: $black;
+	color: $black;
+}
+
+.home { color: $white; }
+.home, .contact, .about, .team, .projects, .content {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+section {
+	transform-origin: bottom right;
+	transition: 
+		transform $transition $easing,
+		border-radius $transition $easing;
+	user-select: none;
+	will-change: transform;
+	cursor: pointer;
+	
+	/*&:before {
+		display: block;
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		box-shadow: 0 $line-height/2 $line-height rgba(black, .5);
+	}*/
+	
+	@for $i from 1 through 5 {
+		&:nth-child(#{$i}) {	
+			@if $i > 1 {
+				$i : $i - 1;
+				$scale : 1 - $i/20;
+				$translate : $i * $line-height;
+
+				background: saturate(nth($colors, ($i + 1)), 20%);
+				transform: 
+					scale3d($scale,1,1)
+					translate3d(0,$translate,0);
+
+				.content {
+					transform: scale3d((1 + (1 - $scale)),1,1);
+				}
+			}
+		}
+
+		&.on {
+			transform: scale3d(1,1,1) translate3d(0,0,0);
+			border-top-left-radius: 0;
+			
+			.content {
+				transform: scale3d(1,1,1) translate3d(0,0,0);		
+			}
+			
+			& ~ section {
+				transform: 
+					scale3d(1,1,1) 
+					translate3d(100%,100%,0);
+			}
+		}
+	}
+}
+
+.content {
+	transform-origin: top left;
+	transition: 
+		transform $transition $easing,
+		border-radius $transition $easing;
+}
+
+h1 {
+	display: inline-block;
+	font: 40px/#{$line-height*2 - 40px} Alegreya Sans;
+	padding: 0 $line-height;
+	margin: 10px;
+	border-radius: $line-height;
+	transform: scale3d(.5,.5,.5);
+	transform-origin: top left;
+	background: rgba($black, .1);
+	transition: 
+		background $transition $easing,
+		transform $transition $easing;
+	
+	&:hover {
+		background: rgba($black, .25);
+		transition: 
+			background $transition/4 $easing,
+			transform $transition $easing;
+	}
+	
+	.on & {
+		transform: scale3d(1,1,1) translate3d(-$line-height/2,0,0);
+		background: rgba($black, 0);
+	}
+}
