@@ -1,0 +1,18 @@
+.box {width: 400px;
+height: 600px;
+background-image: url("/img/1.png");
+background-size: cover;
+transform-style: preserve-3d;
+margin: 0 auto;
+transform: translateZ(0px)}
+
+
+
+.inner {
+  width: 400px;
+  height: 600px;
+background-image: url("/img/2.png");
+background-size: cover;
+ margin: 0 auto;
+ transform: translateZ(100px)}
+
