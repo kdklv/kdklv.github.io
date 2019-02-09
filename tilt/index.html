@@ -38,7 +38,12 @@
 
   <body>
 <div class="okv">
-  <div class="box" data-tilt data-tilt-max="20" data-tilt-speed="1500" data-tilt-scale="0.93" data-tilt-perspective="500" reverse="true">
+  <div class="box" data-tilt data-tilt-max="20" data-tilt-speed="1500" data-tilt-scale="0.93" data-tilt-perspective="500" reverse="true" 
+  
+  gyroscopeMinAngleX:     -60     // This is the bottom limit of the device angle on X axis, meaning that a device rotated at this angle would tilt the element as if the mouse was on the left border of the element;
+  gyroscopeMaxAngleX:     60      // This is the top limit of the device angle on X axis, meaning that a device rotated at this angle would tilt the element as if the mouse was on the right border of the element;
+  gyroscopeMinAngleY:     -60     // This is the bottom limit of the device angle on Y axis, meaning that a device rotated at this angle would tilt the element as if the mouse was on the top border of the element;
+  gyroscopeMaxAngleY:     60      // This is the top limit of the device angle on Y axis, meaning that a device rotated at this angle would tilt the element as if the mouse was on the bottom border of the element;>
             <div class="inner"></div>
         </div>
 </div>
@@ -57,3 +62,4 @@
 </body>
 
 </html>
+
