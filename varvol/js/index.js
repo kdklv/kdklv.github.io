@@ -18,7 +18,7 @@ var bar = {
 	y: 0,
 	width: WIDTH,
 	height: 0,
-	fill: "#fff" };
+	fill: "#000" };
 
 
 function initAudioContext() {
@@ -52,7 +52,7 @@ function gotStream(stream) {
 function draw(time) {
 	// clear the background
 	canvasContext.clearRect(0, 0, WIDTH, HEIGHT);
-	canvasContext.fillStyle = "#ffffff";
+	canvasContext.fillStyle = "#000";
 
 
 
