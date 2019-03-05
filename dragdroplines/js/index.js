@@ -4,7 +4,11 @@ var lineOptions = {
   size: 1,
   startSocket: 'right',
   path: 'straight',
-  endSocket: 'left' };
+  endSocket: 'left', 
+  startPlug: 'behind',
+  endPlug: 'behind'
+
+};
 
 
 var dragOptions = {
@@ -24,7 +28,8 @@ $box2.querySelector('.anchor.is-in'), _extends({},
 lineOptions, {
   color: '#000',
   endPlugColor: '#000',
-  gradient: true }));
+  gradient: true,
+ }));
 
 
 
