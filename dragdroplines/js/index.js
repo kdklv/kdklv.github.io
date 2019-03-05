@@ -22,8 +22,8 @@ $box1.querySelector('.anchor.is-out'),
 $box2.querySelector('.anchor.is-in'), _extends({},
 
 lineOptions, {
-  color: '#2CB1BC',
-  endPlugColor: '#2680C2',
+  color: '#000',
+  endPlugColor: '#000',
   gradient: true }));
 
 
@@ -34,12 +34,10 @@ $box1.querySelector('.anchor.is-out'),
 $box3.querySelector('.anchor.is-in'), _extends({},
 
 lineOptions, {
-  color: '#2680C2',
+  color: '#000',
   endPlugColor: '#BA2525',
   gradient: true,
-  dash: {
-    animation: {
-      duration: 300 } } }));
+   }));
 
 
 
@@ -50,8 +48,8 @@ $box1.querySelector('.anchor.is-out'),
 $box4.querySelector('.anchor.is-in'), _extends({},
 
 lineOptions, {
-  color: '#2CB1BC',
-  endPlugColor: '#2680C2',
+  color: '#000',
+  endPlugColor: '#000',
   gradient: true }));
 
 

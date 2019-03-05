@@ -16,7 +16,7 @@ body {
 
 .screen {
   position: relative;
-  background: #D9E2EC;
+  background: #fff;
   height: 100vh;
   width: 100vw;
   color: #243B53;
@@ -28,8 +28,8 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  min-width: 1900px;
+  height: 200%;
+  
 }
 
 .box {
@@ -39,7 +39,8 @@ body {
   font-weight: bold;
   top: 0;
   left: 0;
-  border-left: 3px solid #2680C2;
+  border: 1px solid #000;
+  border-left: 5px solid #000;
 }
 .box small {
   font-weight: normal;
@@ -53,14 +54,14 @@ body {
   height: 16px;
   width: 16px;
   border-radius: 16px;
-  background: #2680C2;
-  border: 3px solid #62B0E8;
+  background: #fff;
+  border: 3px solid #000;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
 .anchor.is-in {
-  top: 0%;
-  left: -9px;
+  top: 28px;
+  left: -10px;
 }
 .anchor.is-out {
   top: 100%;
@@ -68,24 +69,24 @@ body {
 }
 
 .box.is-success {
-  border-left-color: #2CB1BC;
+  border-left-color: #000;
 }
 .box.is-success .anchor {
-  background: #2CB1BC;
-  border-color: #54D1DB;
+  background: #fff;
+  border-color: #000;
 }
 
 .box.is-error {
   border-left-color: #BA2525;
 }
 .box.is-error .anchor {
-  background: #BA2525;
-  border-color: #E66A6A;
+  background: #fff;
+  border-color: #BA2525;
 }
 
 #box-1 {
-  top: 10%;
-  left: 100px;
+  top: 100px;
+  left: 50px;
   position: fixed;
 }
 
