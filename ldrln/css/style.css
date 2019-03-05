@@ -1,0 +1,102 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: #243B53;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.leader-line {
+  position: fixed !important;
+}
+
+.screen {
+  position: relative;
+  background: #D9E2EC;
+  height: 100vh;
+  width: 100vw;
+  color: #243B53;
+  overflow: auto;
+}
+
+.scroll {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 1900px;
+}
+
+.box {
+  padding: 20px;
+  background: white;
+  font-weight: bold;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  top: 0;
+  left: 0;
+  border-left: 3px solid #2680C2;
+}
+.box small {
+  font-weight: normal;
+  display: block;
+  color: #627D98;
+  white-space: nowrap;
+}
+
+.anchor {
+  position: absolute;
+  top: 50%;
+  height: 16px;
+  width: 16px;
+  border-radius: 16px;
+  background: #2680C2;
+  border: 3px solid #62B0E8;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.anchor.is-in {
+  left: -9px;
+}
+.anchor.is-out {
+  right: -8px;
+}
+
+.box.is-success {
+  border-left-color: #2CB1BC;
+}
+.box.is-success .anchor {
+  background: #2CB1BC;
+  border-color: #54D1DB;
+}
+
+.box.is-error {
+  border-left-color: #BA2525;
+}
+.box.is-error .anchor {
+  background: #BA2525;
+  border-color: #E66A6A;
+}
+
+#box-1 {
+  position: fixed;
+  top: 10%;
+  left: 100px;
+}
+
+#box-2 {
+  position: absolute;
+  top: 60%;
+  left: 400px;
+}
+
+#box-3 {
+  position: absolute;
+  top: 40%;
+  left: 1700px;
+}
