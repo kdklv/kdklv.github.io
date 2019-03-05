@@ -62,8 +62,8 @@ body {
           transform: translateY(-50%);
 }
 .anchor.is-in {
-  top: 28px;
-  left: -10px;
+  top: 0px;
+  left: -11px;
 }
 .anchor.is-out {
   top: 100%;
@@ -71,7 +71,7 @@ body {
 }
 
 .box.is-success {
-  border-left-color: #000;
+  border-right-color: #000;
 }
 .box.is-success .anchor {
   background: #fff;
@@ -87,8 +87,8 @@ body {
 }
 
 #box-1 {
-  top: 5%;
-  left: 5%;
+  top: 0%;
+  left: 0%;
   position: fixed;
 }
 
