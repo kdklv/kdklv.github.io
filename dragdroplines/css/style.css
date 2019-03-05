@@ -85,22 +85,22 @@ body {
 }
 
 #box-1 {
-  top: 100px;
-  left: 50px;
+  top: 5%;
+  left: 5%;
   position: fixed;
 }
 
 #box-2 {
-  top: 60%;
-  left: 400px;
+  top: 10%;
+  left: 40%;
 }
 
 #box-3 {
   top: 40%;
-  left: 1700px;
+  left: 90%;
 }
 
 #box-4 {
-  top: 60%;
-  left: 1200px;
+  top: 120%;
+  left: 60%;
 }
