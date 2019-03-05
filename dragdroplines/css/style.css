@@ -41,8 +41,7 @@ body {
   top: 0;
   left: 0;
   border: 1px solid #000;
-  -webkit-transform: translateZ(10px);
-  transform: translateZ(10px);
+
 }
 
 .box small {
