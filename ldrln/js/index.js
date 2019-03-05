@@ -31,13 +31,10 @@ var line2 = new LeaderLine(
 $box1.querySelector('.anchor.is-out'),
 $box3.querySelector('.anchor.is-in'), _extends({},
 
-lineOptions, {
-  color: '#2680C2',
-  endPlugColor: '#BA2525',
-  gradient: true,
-  dash: {
-    animation: {
-      duration: 300 } } }));
+  lineOptions, {
+    color: '#000',
+    endPlugColor: '#BA2525',
+    gradient: true }));
 
 
       var line3 = new LeaderLine(
