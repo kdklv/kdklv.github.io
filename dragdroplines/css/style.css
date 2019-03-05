@@ -10,7 +10,9 @@ body {
   justify-content: center;
 }
 
-
+.leader-line {
+  position: fixed !important;
+}
 
 .screen {
   position: relative;
