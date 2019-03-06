@@ -47,12 +47,14 @@ var dragBox3 = new PlainDraggable($box3, _extends({}, dragOptions));
 
 dragBox1.onMove = function () {
   line1.position();
+  line2.position();
 };
 dragBox2.onMove = function () {
   line1.position();
   line2.position();
 };
 dragBox3.onMove = function () {
+  line1.position();
   line2.position();
 };
 
