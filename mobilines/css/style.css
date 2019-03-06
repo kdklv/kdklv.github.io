@@ -41,7 +41,8 @@ body {
   font-weight: bold;
   top: 0;
   left: 0;
-  border: 1px solid #000;
+  box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.2);
+
 
 }
 
