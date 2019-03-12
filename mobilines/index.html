@@ -46,10 +46,15 @@
 
 
 
-<script type="text/javascript" src="js/libs.core.min.js"></script>
-<script type="text/javascript" src="js/cables.min.js"></script>
-<script type="text/javascript" src="js/ops.js"></script>
 
+
+<script src='https://anseki.github.io/leader-line/js/leader-line.min.js'></script>
+<script src='https://anseki.github.io/leader-line/js/anim-event.min.js'></script>
+<script src='https://anseki.github.io/leader-line/js/plain-draggable.min.js'></script>
+<script  src="js/index.js"></script>
+<script type="text/javascript" src="js/_libs.core.min.js"></script>
+<script type="text/javascript" src="js/_cables.min.js"></script>
+<script type="text/javascript" src="js/_ops.js"></script>
 <script>
     function showError(errId, errMsg) {
         alert('An error occured: ' + errId + ', ' + errMsg);
@@ -60,7 +65,7 @@
     }
     document.addEventListener('DOMContentLoaded', function(event) {
         CABLES.patch = new CABLES.Patch({
-            patchFile: 'js/grid_bg.json',
+            patchFile: 'js/_grid_bg.json',
             prefixAssetPath: '',
             glCanvasId: 'glcanvas',
             glCanvasResizeToWindow: true,
@@ -70,15 +75,6 @@
         });
     });
 </script>
-
-  <script src='https://anseki.github.io/leader-line/js/leader-line.min.js'></script>
-<script src='https://anseki.github.io/leader-line/js/anim-event.min.js'></script>
-<script src='https://anseki.github.io/leader-line/js/plain-draggable.min.js'></script>
-
-  
-
-<script  src="js/index.js"></script>
-
 
 
 
