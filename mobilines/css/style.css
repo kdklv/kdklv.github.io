@@ -11,7 +11,7 @@ canvas{
 
 .glcanvas {
   width: 100vw;  
-  height: 200vh;
+  min-height: 100vh;
 
 }
 

@@ -34,7 +34,7 @@
             <small>Box three is not a tree</small>
             <span class="anchor is-in"></span>
           </div> 
-          
+           
           <div class="kmem"></div><canvas id="glcanvas"></canvas></div>
 
         </div>
@@ -51,17 +51,13 @@
 <script type="text/javascript" src="js/ops.js"></script>
 
 <script>
-
     function showError(errId, errMsg) {
         alert('An error occured: ' + errId + ', ' + errMsg);
     }
-
     function patchInitialized() {
     }
-
     function patchFinishedLoading() {
     }
-
     document.addEventListener('DOMContentLoaded', function(event) {
         CABLES.patch = new CABLES.Patch({
             patchFile: 'js/grid_bg.json',
