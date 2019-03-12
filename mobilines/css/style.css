@@ -2,12 +2,32 @@
   box-sizing: border-box;
 }
 
+
+canvas{
+  z-index: -1;
+  top: 10px;
+
+}
+
+.glcanvas {
+  width: 100vw;  
+  height: 200vh;
+
+}
+
+.kmem{
+  z-index: -1;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+}
+
 body {
-  background: #243B53;
   display: flex;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 
@@ -17,7 +37,6 @@ body {
 
 .screen {
   position: relative;
-  background: #fff;
   height: 100vh;
   width: 100vw;
   color: #243B53;
