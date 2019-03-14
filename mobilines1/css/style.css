@@ -3,12 +3,14 @@
 }
 
 
-.glcanvas {
+#glcanvas {
   display: block;
+  position: fixed;
   width: 100vw;  
   min-height: 100vh;
-  position: fixed;
-  z-index: -1;
+  z-index: -2;
+  pointer-event: inherit;
+
 }
 
 body {
@@ -29,9 +31,10 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: auto;
+
 }
 
-.scroll {
+.escroll {
   position: absolute;
   top: 0;
   left: 0;
@@ -43,16 +46,12 @@ body {
 
 .box {
   position: absolute;
-  z-index: 1;
-
   padding: 20px;
   background: white;
   font-weight: bold;
   top: 0;
   left: 0;
   box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.2);
-
-
 }
 
 .box small {
@@ -102,21 +101,21 @@ body {
 }
 
 #box-1 {
-  top: 0%;
-  left: 0%;
+  top: 5rem;
+  left: 5rem;
   position: fixed;
   border-right: 5px solid #000;
 }
 
 #box-2 {
-  top: 10%;
-  left: 70%;
+  top: 5rem;
+  left: 55rem;
   border-left: 5px solid #000;
 }
 
 #box-3 {
-  top: 40%;
-  left: 80%;
+  top: 35rem;
+  left: 25rem;
   border-left: 5px solid #BA2525;
 }
 
