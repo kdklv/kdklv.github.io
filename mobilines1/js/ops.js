@@ -5,12 +5,11 @@ CABLES.OPS=CABLES.OPS||{};
 
 var Ops=Ops || {};
 Ops.Gl=Ops.Gl || {};
+Ops.Html=Ops.Html || {};
 Ops.Math=Ops.Math || {};
-Ops.Devices=Ops.Devices || {};
 Ops.Gl.Matrix=Ops.Gl.Matrix || {};
 Ops.Gl.Meshes=Ops.Gl.Meshes || {};
 Ops.Gl.Shader=Ops.Gl.Shader || {};
-Ops.Devices.Mouse=Ops.Devices.Mouse || {};
 
 
 
@@ -706,294 +705,110 @@ CABLES.OPS["85ae5cfa-5eca-4dd8-8b30-850ac34f7cd5"]={f:Ops.Gl.Shader.BasicMateria
 
 // **************************************************************
 // 
-// Ops.Math.MapRange
+// Ops.Html.ScrollPosition
 // 
 // **************************************************************
 
-Ops.Math.MapRange = function()
+Ops.Html.ScrollPosition = function()
 {
 CABLES.Op.apply(this,arguments);
 const op=this;
 const attachments={};
+var sleft=op.addOutPort(new CABLES.Port(op,"left"));
+var stop=op.addOutPort(new CABLES.Port(op,"top"));
 
-const result=op.outValue("result");
-var v=op.inValueFloat("value");
-var old_min=op.inValueFloat("old min");
-var old_max=op.inValueFloat("old max");
-var new_min=op.inValueFloat("new min");
-var new_max=op.inValueFloat("new max");
-var easing=op.inValueSelect("Easing",["Linear","Smoothstep","Smootherstep"],"Linear");
-
-op.setPortGroup("Input Range",[old_min,old_max]);
-op.setPortGroup("Output Range",[new_min,new_max]);
-
-var ease=0;
-var r=0;
-
-easing.onChange=function()
+function updateScroll()
 {
-    if(easing.get()=="Smoothstep") ease=1;
-        else if(easing.get()=="Smootherstep") ease=2;
-            else ease=0;
+    sleft.set( (window.pageXOffset !== undefined) ? window.pageXOffset : (document.documentElement || document.body.parentNode || document.body).scrollLeft );
+    stop.set( (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop );
+}
+
+
+document.addEventListener("scroll", updateScroll);
+
+
 };
 
+Ops.Html.ScrollPosition.prototype = new CABLES.Op();
+
+
+
+
+
+// **************************************************************
+// 
+// Ops.Math.Multiply
+// 
+// **************************************************************
+
+Ops.Math.Multiply = function()
+{
+CABLES.Op.apply(this,arguments);
+const op=this;
+const attachments={};
+const number1=op.inValueFloat("number1");
+const number2=op.inValueFloat("number2");
+const result=op.outValue("result");
+
+number1.set(1);
+number2.set(2);
+
+number1.onChange=update;
+number2.onChange=update;
+update();
+
+function update()
+{
+    const n1=number1.get();
+    const n2=number2.get();
+
+    if(isNaN(n1))n1=0;
+    if(isNaN(n2))n2=0;
+
+    result.set( n1*n2 );
+}
+
+
+
+};
+
+Ops.Math.Multiply.prototype = new CABLES.Op();
+CABLES.OPS["1bbdae06-fbb2-489b-9bcc-36c9d65bd441"]={f:Ops.Math.Multiply,objName:"Ops.Math.Multiply"};
+
+
+
+
+// **************************************************************
+// 
+// Ops.Math.Sum
+// 
+// **************************************************************
+
+Ops.Math.Sum = function()
+{
+CABLES.Op.apply(this,arguments);
+const op=this;
+const attachments={};
+const
+    number1=op.inValueFloat("number1",1),
+    number2=op.inValueFloat("number2",1),
+    result=op.outValue("result");
+
+number1.onChange=
+number2.onChange=exec;
+exec();
 
 function exec()
 {
-    if(v.get()>=Math.max( old_max.get(),old_min.get() ))
-    {
-        result.set(new_max.get());
-        return;
-    }
-    else
-    if(v.get()<=Math.min( old_max.get(),old_min.get() ))
-    {
-        result.set(new_min.get());
-        return;
-    }
-
-    var nMin=new_min.get();
-    var nMax=new_max.get();
-    var oMin=old_min.get();
-    var oMax=old_max.get();
-    var x=v.get();
-
-    var reverseInput = false;
-    var oldMin = Math.min( oMin, oMax );
-    var oldMax = Math.max( oMin, oMax );
-    if(oldMin!= oMin) reverseInput = true;
-
-    var reverseOutput = false;
-    var newMin = Math.min( nMin, nMax );
-    var newMax = Math.max( nMin, nMax );
-    if(newMin != nMin) reverseOutput = true;
-
-    var portion=0;
-
-    if(reverseInput) portion = (oldMax-x)*(newMax-newMin)/(oldMax-oldMin);
-        else portion = (x-oldMin)*(newMax-newMin)/(oldMax-oldMin);
-
-    if(reverseOutput) r=newMax - portion;
-        else r=portion + newMin;
-
-    if(ease===0)
-    {
-        result.set(r);
-    }
-    else
-    if(ease==1)
-    {
-        x = Math.max(0, Math.min(1, (r-nMin)/(nMax-nMin)));
-        result.set( nMin+x*x*(3 - 2*x)* (nMax-nMin) ); // smoothstep
-    }
-    else
-    if(ease==2)
-    {
-        x = Math.max(0, Math.min(1, (r-nMin)/(nMax-nMin)));
-        result.set( nMin+x*x*x*(x*(x*6 - 15) + 10) * (nMax-nMin) ) ; // smootherstep
-    }
-
-}
-
-v.set(0);
-old_min.set(0);
-old_max.set(1);
-new_min.set(-1);
-new_max.set(1);
-
-
-v.onChange=exec;
-old_min.onChange=exec;
-old_max.onChange=exec;
-new_min.onChange=exec;
-new_max.onChange=exec;
-
-result.set(0);
-
-exec();
-
-};
-
-Ops.Math.MapRange.prototype = new CABLES.Op();
-CABLES.OPS["2617b407-60a0-4ff6-b4a7-18136cfa7817"]={f:Ops.Math.MapRange,objName:"Ops.Math.MapRange"};
-
-
-
-
-// **************************************************************
-// 
-// Ops.Devices.Mouse.MouseWheel
-// 
-// **************************************************************
-
-Ops.Devices.Mouse.MouseWheel = function()
-{
-CABLES.Op.apply(this,arguments);
-const op=this;
-const attachments={};
-const valIn=op.inValue("Value",0);
-const mul=op.inValue("Multiply",1);
-const minUnlimitedPort = op.inValueBool('Min Unlimited', false);
-minUnlimitedPort.setUiAttribs({ hidePort: true });
-const min=op.inValue("min",-100);
-const maxUnlimitedPort = op.inValueBool('Max Unlimited', false);
-maxUnlimitedPort.setUiAttribs({ hidePort: true });
-const max=op.inValue("max", 100);
-const smooth=op.inValueBool("smooth");
-const smoothSpeed=op.inValue("delay",0.3);
-const preventScroll=op.inValueBool("prevent scroll");
-const flip=op.inValueBool("Flip Direction");
-const active=op.inValueBool("active",true);
-const reset=op.inTriggerButton("Reset");
-const absVal=op.outValue("absolute value",0);
-const delta=op.outValue("delta",0);
-
-const cgl=op.patch.cgl;
-var value=0;
-
-var anim=new CABLES.Anim();
-anim.defaultEasing=CABLES.TL.EASING_EXPO_OUT;
-
-var startTime=CABLES.now()/1000.0;
-var v=0;
-var smoothTimer=0;
-
-anim.clear();
-anim.setValue(CABLES.now()/1000.0-startTime,absVal.get());
-var dir=1;
-var isWindows=navigator.appVersion.indexOf("Win")!=-1;
-
-addListener();
-
-min.onChange=function()
-{
-    checkValue();
-    absVal.set( v );
-};
-
-max.onChange=function()
-{
-    checkValue();
-    absVal.set( v );
-};
-
-minUnlimitedPort.onChange = function() {
-    var minUnlimited = minUnlimitedPort.get();
-    min.setUiAttribs({
-        hidePort: minUnlimited,
-        greyout: minUnlimited
-    });
-};
-
-maxUnlimitedPort.onChange = function() {
-    var maxUnlimited = maxUnlimitedPort.get();
-    max.setUiAttribs({
-        hidePort: maxUnlimited,
-        greyout: maxUnlimited
-    });
-};
-
-reset.onTriggered=function()
-{
-    anim.clear();
-    anim.setValue(CABLES.now()/1000.0-startTime,valIn.get());
-    absVal.set(valIn.get());
-    v=0;
-};
-
-valIn.onChange=function()
-{
-    v=valIn.get();
-
-    checkValue();
-
-    absVal.set( v );
-
-    anim.clear();
-    anim.setValue(CABLES.now()/1000.0-startTime,absVal.get());
-
-};
-
-function updateSmooth()
-{
-    var v=anim.getValue( CABLES.now()/1000.0-startTime );
-
-    absVal.set( v );
-}
-
-smooth.onChange=function()
-{
-    if(smooth.get()) smoothTimer = setInterval(updateSmooth, 15);
-        else clearTimeout(smoothTimer);
-};
-
-// var isMac = navigator.platform.toUpperCase().indexOf('MAC')>=0;
-
-
-function checkValue()
-{
-    if(!maxUnlimitedPort.get()) {
-        v=Math.min(max.get(),v);
-    }
-    if(!minUnlimitedPort.get()) {
-        v=Math.max(min.get(),v);
-    }
-}
-
-flip.onChange=function()
-{
-    if(flip.get())dir=-1;
-        else dir=1;
-};
-
-var vOut=0;
-
-function onMouseWheel(e)
-{
-    var d= CGL.getWheelSpeed(e)*(dir)*mul.get();
-    if(isWindows)d*=4;
-
-    delta.set(0);
-    delta.set(d);
-    v-=d;
-    checkValue();
-
-    if( !smooth.get() )
-    {
-        absVal.set(v);
-    }
-    else
-    {
-        anim.clear();
-        anim.setValue(CABLES.now()/1000.0-startTime,absVal.get());
-        anim.setValue(CABLES.now()/1000.0-startTime+smoothSpeed.get(),v);
-    }
-
-    if(preventScroll.get()) e.preventDefault();
-}
-
-function addListener()
-{
-    cgl.canvas.addEventListener('wheel', onMouseWheel);
-}
-
-function removeListener()
-{
-    cgl.canvas.removeEventListener('wheel', onMouseWheel);
+    var v=number1.get()+number2.get();
+    if(!isNaN(v)) result.set( v );
 }
 
 
-active.onChange=function()
-{
-    removeListener();
-    if(active.get())addListener();
-};
-
-
 
 };
 
-Ops.Devices.Mouse.MouseWheel.prototype = new CABLES.Op();
-CABLES.OPS["40331e99-d2c6-4a0a-b5dd-385045aecd18"]={f:Ops.Devices.Mouse.MouseWheel,objName:"Ops.Devices.Mouse.MouseWheel"};
+Ops.Math.Sum.prototype = new CABLES.Op();
+CABLES.OPS["c8fb181e-0b03-4b41-9e55-06b6267bc634"]={f:Ops.Math.Sum,objName:"Ops.Math.Sum"};
 
 

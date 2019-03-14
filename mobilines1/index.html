@@ -2,10 +2,9 @@
 <html lang="en" >
 
 <head>
-  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
   <title>linye</title>
   
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   
       <link rel="stylesheet" href="css/style.css">
 
@@ -24,22 +23,24 @@
             <small>Box one is boxxxxin</small>
             <span class="anchor is-out"></span>
           </div>
+
           <div class="box" id="box-2">
             BOX 2
             <small>Box two in boxxinnnnn too</small>
             <span class="anchor is-in"></span>
           </div>
+          
           <div class="box is-error" id="box-3">
             BOX 3
             <small>Box three is not a tree</small>
             <span class="anchor is-in"></span>
           </div> 
-           
-          <div class="kmem"></div><canvas id="glcanvas"></canvas></div>
+
+          <canvas id="glcanvas"></canvas> 
 
         </div>
 
-        
+
       </div>
       
       </div>
@@ -52,9 +53,9 @@
 <script src='https://anseki.github.io/leader-line/js/anim-event.min.js'></script>
 <script src='https://anseki.github.io/leader-line/js/plain-draggable.min.js'></script>
 <script  src="js/index.js"></script>
-<script type="text/javascript" src="js/_libs.core.min.js"></script>
-<script type="text/javascript" src="js/_cables.min.js"></script>
-<script type="text/javascript" src="js/_ops.js"></script>
+<script type="text/javascript" src="js/libs.core.min.js"></script>
+<script type="text/javascript" src="js/cables.min.js"></script>
+<script type="text/javascript" src="js/ops.js"></script>
 <script>
     function showError(errId, errMsg) {
         alert('An error occured: ' + errId + ', ' + errMsg);
@@ -65,7 +66,7 @@
     }
     document.addEventListener('DOMContentLoaded', function(event) {
         CABLES.patch = new CABLES.Patch({
-            patchFile: 'js/_grid_bg.json',
+            patchFile: 'js/pos.json',
             prefixAssetPath: '',
             glCanvasId: 'glcanvas',
             glCanvasResizeToWindow: true,

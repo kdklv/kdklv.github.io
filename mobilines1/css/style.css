@@ -3,23 +3,12 @@
 }
 
 
-canvas{
-  z-index: -1;
-  top: 10px;
-
-}
-
 .glcanvas {
+  display: block;
   width: 100vw;  
   min-height: 100vh;
-
-}
-
-.kmem{
+  position: fixed;
   z-index: -1;
-  position: fixed !important;
-  top: 0;
-  left: 0;
 }
 
 body {
@@ -54,6 +43,8 @@ body {
 
 .box {
   position: absolute;
+  z-index: 1;
+
   padding: 20px;
   background: white;
   font-weight: bold;
