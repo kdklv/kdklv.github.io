@@ -45,6 +45,7 @@ body {
 
 .box {
   position: absolute;
+  width: 8rem;
   padding: 20px;
   background: white;
   font-weight: bold;
