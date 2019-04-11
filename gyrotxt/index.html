@@ -35,7 +35,7 @@
 
 
     <script type="text/javascript" src="js/libs.core.min.js"></script>
-    <script type="text/javascript" src="js/cables.min.js"></script>
+    <script type="text/javascript" src="js/code.min.js"></script>
     
     <script type="text/javascript" src="js/ops.js"></script>
     
@@ -49,17 +49,7 @@
 
         function patchFinishedLoading() {
         }
-
-        document.addEventListener('DOMContentLoaded', function(event) {
-            CABLES.patch = new CABLES.Patch({
-                patchFile: 'js/acceler.json',
-                prefixAssetPath: '',
-                glCanvasId: 'glcanvas',
-                glCanvasResizeToWindow: true,
-                onError: showError,
-                onPatchLoaded: patchInitialized,
-                onFinishedLoading: patchFinishedLoading,
-            });
+        document.addEventListener('DOMContentLoaded', function(event) {  CABLES.patch = new CABLES.Patch({ patchFile: 'js/acceler.json', prefixAssetPath: '',  glCanvasId: 'glcanvas', glCanvasResizeToWindow: true, onError: showError, onPatchLoaded: patchInitialized,                onFinishedLoading: patchFinishedLoading,            });
         });
 
         function preventBehavior(e) {
