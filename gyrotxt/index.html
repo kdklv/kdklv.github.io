@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>MANOR</title>
+    <title>acceler | made with cables</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
     <style>
         body { 
@@ -13,8 +13,6 @@
         }
         canvas {
             display: block;
-            position: fixed;
-
         }
         footer {
             position: absolute;
@@ -27,34 +25,53 @@
             font-size: 18px;
             color: #24baa7;
         }
+        footer a, footer a:hover, footer a:active {
+            color: #24baa7;
+        }
     </style>
 </head>
 <body>
     <canvas id="glcanvas" width="100vw" height="100vh"></canvas>
+    <footer>
+        made with <a href="https://cables.gl">cables</a>
+        <!-- we would greatly appreciate if you link cables somewhere on your site! and tell us your website! thanks <3 :) -->
+    </footer>
+
     <script type="text/javascript" src="js/libs.core.min.js"></script>
     <script type="text/javascript" src="js/cables.min.js"></script>
+    
     <script type="text/javascript" src="js/ops.js"></script>
-        <script>
+    
+    <script>
+        /**
+         * Called when there was a cables error.
+         * @param {string} errId - ID of the error, e.g. 'NO_WEBGL' or 'NO_WEBAUDIO' 
+         *                         when the browser does not support the used APIs
+         * @param {string} errMsg - The error message
+         */
         function showError(errId, errMsg) {
-            alert('An error occured: ' + errId + ', ' + errMsg);        }
-        function patchInitialized() {        }
-        function patchFinishedLoading() {        }
+            alert('An error occured: ' + errId + ', ' + errMsg);
+        }
+
+        function patchInitialized() {
+            // You can now access the patch object (CABLES.patch), register variable watchers and so on
+        }
+
+        function patchFinishedLoading() {
+            // The patch is ready now, all assets have been loaded
+        }
+
         document.addEventListener('DOMContentLoaded', function(event) {
             CABLES.patch = new CABLES.Patch({
-                patchFile: 'js/MANER.json',
+                patchFile: 'js/acceler.json',
                 prefixAssetPath: '',
                 glCanvasId: 'glcanvas',
                 glCanvasResizeToWindow: true,
                 onError: showError,
                 onPatchLoaded: patchInitialized,
                 onFinishedLoading: patchFinishedLoading,
-            });        });
-            function preventBehavior(e) {
-                e.preventDefault(); 
-              };
-              
-              var canvas = document.getElementById('glcanvas');
-              canvas.addEventListener('touchmove', preventBehavior, false);
+            });
+        });
     </script>
 </body>
 </html>

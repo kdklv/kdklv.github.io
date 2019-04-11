@@ -1,6 +1,5 @@
 var _extends = Object.assign || function (target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i];for (var key in source) {if (Object.prototype.hasOwnProperty.call(source, key)) {target[key] = source[key];}}}return target;};
 var $screen = document.querySelector('.screen');
-var $bodi = document.querySelector('body');
 
 
 var lineOptions = {
@@ -64,7 +63,3 @@ $screen.addEventListener('scroll', AnimEvent.add(function () {
   line2.position();
 }), false);
 
-$bodi.addEventListener('scroll', AnimEvent.add(function () {
-  line1.position();
-  line2.position();
-}), false);
