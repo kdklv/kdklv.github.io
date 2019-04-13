@@ -264,7 +264,7 @@ function change_tool(this_tool) {
 
     if (this_tool == 6) {
 
-        $('#main_txt')[0].innerHTML = "<span>Gucci</span><br><span>Gucci</span><br><span>Gucci</span><br><span>Gucci</span><br><span>Gucci</span><br><span>Gucci</span>"
+        $('#main_txt')[0].innerHTML = "<span>Pucci</span><br><span>Rucci</span><br><span>Tucci</span><br><span>Gucci</span><br><span>Gucci</span><br><span>Gucci</span>"
         $("#main_txt").css('font-size','4.2rem').css('line-height','3.7rem').css('white-space','nowrap');
         $('#main_txt span').addClass("ginto1");
 
