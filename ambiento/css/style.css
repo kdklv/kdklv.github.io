@@ -1,0 +1,23 @@
+body {
+  font-family: Georgia, serif;
+}
+
+code {
+    -webkit-user-select: all; /* Chromium */
+  -moz-user-select: all; /* Firefox */
+  -ms-user-select: all; /* currently not supported */
+  user-select: all;
+}
+
+.lux {
+  width: 80vw;
+  margin: auto;
+  border: 1px solid #ddd;
+  padding: 1em;
+  text-align: center;
+}
+
+output {
+  display: inline-block;
+  font-size: 3em;
+}
