@@ -1,0 +1,32 @@
+h1 { 
+  color: #bdc3c7;
+  text-align: center;
+
+}
+.debug {
+  //position: absolute;
+  top: 0;
+  text-align: center;
+  color: white;
+  left: 0;
+}
+body {
+  background: #2c3e50;
+}
+video {
+  margin: auto;
+
+  display: block;
+  background: red;
+  opacity: 0.5;
+  -webkit-filter: saturate(0);
+  
+}
+.dot {
+  background: rgba(#e74c3c, 0.5);
+  height: 25px;
+  width: 25px;
+  position: relative;
+  margin: 0 auto;
+  border-radius: 0%;
+}
