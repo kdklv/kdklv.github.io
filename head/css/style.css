@@ -5,8 +5,15 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+@font-face {
+    font-family: 'k3_';
+    src: url('k3_.ttf') format("truetype");
+    }
+
 html {
-    font: 62.5%/1.5 Arial, sans-serif;
+    font: 50%/1.2;
+    font-family: 'k3_';
     color: #000;
     background: #fff;
 }
@@ -39,6 +46,7 @@ a:hover {
 }
 #main-content {
     width: 70vw;
+    font-weight: 100;
     max-width: 80%;
 }
 #main-content p {
