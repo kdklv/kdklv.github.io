@@ -1,0 +1,71 @@
+@font-face {
+  font-family: "Kairos Sans Variable";
+  src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/209981/KairosSans_Variable.ttf");
+}
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background: url(https://images.unsplash.com/photo-1522441815192-d9f04eb0615c?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ&s=71656407a1704a41aff4cd15b8410676);
+  background-size: cover;
+}
+
+h1 {
+  --slant: 0;
+  --width: 125;
+  font-family: "Kairos Sans Variable";
+  font-variation-settings: "wght" 325, "ital" var(--slant), "wdth" var(--width);
+  font-size: 18vw;
+  color: white;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.splitting .char {
+  transition-delay: calc(60ms * var(--char-index));
+  transition: -webkit-transform 250ms cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  transition: transform 250ms cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  transition: transform 250ms cubic-bezier(0.55, 0.085, 0.68, 0.53), -webkit-transform 250ms cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+.drop.splitting .char {
+  -webkit-transform: translateX(calc(-200px * (1 + var(--char-index) / 2.25)));
+          transform: translateX(calc(-200px * (1 + var(--char-index) / 2.25)));
+}
+
+@-webkit-keyframes drop {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  44% {
+    -webkit-transform: translateX(-200px);
+            transform: translateX(-200px);
+  }
+  100% {
+    -webkit-transform: translateX(-200px);
+            transform: translateX(-200px);
+  }
+}
+
+@keyframes drop {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  44% {
+    -webkit-transform: translateX(-200px);
+            transform: translateX(-200px);
+  }
+  100% {
+    -webkit-transform: translateX(-200px);
+            transform: translateX(-200px);
+  }
+}
