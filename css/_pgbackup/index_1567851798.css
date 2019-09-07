@@ -12,8 +12,8 @@ body {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 3vh;
     line-height: 1.5;
-    padding: 2em;
-    width: 75vw;
+    padding: 2.5em;
+    width: 60vw;
 }
 
 a {
@@ -34,7 +34,7 @@ i {
 
 p,
 .hello {
-    margin-bottom: 0.7em;
+    margin-bottom: 1em;
 }
 
 .bot {
