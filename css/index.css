@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,400i,700");
+
+* {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+/* base styles */
+body {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 3vh;
+    line-height: 1.5;
+    padding: 2.5em;
+    width: 60vw;
+}
+
+a {
+    color: #c9c9c9;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+b {
+    font-weight: 700;
+}
+
+i {
+    font-style: italic;
+}
+
+p,
+.hello {
+    margin-bottom: 1em;
+}
+
+.bot {
+    font-size: 2em;
+    line-height: 1em;
+    height: 1em;
+    width: 1em;
+}
+
+.bot_speaks {
+    position: absolute;
+    left: 2em;
+    top: .2em;
+}
+
+.arrow {
+    display: inline-block;
+    border-top: .3em solid transparent;
+    border-bottom: .3em solid transparent;
+    border-right: .4em solid #f0f0f0;
+}
+
+.words {
+    display: inline-block;
+    font-weight: 700;
+    border-radius: .2em;
+    padding: 0 .4em .1em .7em;
+    background-color: #f0f0f0;
+}
+
+.carret {
+    -webkit-animation: 1s blink step-end infinite;
+    animation: 1s blink step-end infinite;
+}
+
+@keyframes "blink" {
+    from,
+    to {
+        color: transparent;
+    }
+
+    50% {
+        color: black;
+    }
+}
+
+@-webkit-keyframes "blink" {
+    from,
+    to {
+        color: transparent;
+    }
+
+    50% {
+        color: black;
+    }
+}
