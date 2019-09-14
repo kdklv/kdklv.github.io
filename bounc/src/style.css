@@ -1,0 +1,101 @@
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #fff;
+  text-align: center;
+  box-shadow: inset 0 0 0 30px white;
+
+  cursor: -webkit-grab;
+  cursor: grab;
+  user-select: none;
+}
+
+body:active {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+.stage {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  border: 1px solid #000;
+}
+
+h1 {
+  position: relative;
+  margin: 0 auto;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 7rem;
+  font-weight: 700;
+  line-height: 1.6rem;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  z-index: 3;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+h1 span {
+  position: relative;
+  display: block;
+  width: 1.8rem;
+  height: 2rem;
+}
+
+.bouncer {
+  position: relative;
+  margin: 5% auto 0 auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 7px white;
+  border: 3px solid #000;
+}
+
+.bouncer.infoOut:before {
+  opacity: 0;
+}
+
+.bouncer.infoOut:after {
+  opacity: 0;
+  transform: translateX(-50%) translateY(100%);
+}
+
+.bubbles {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.bubble {
+  position: absolute;
+  top: 70px * -0.5;
+  left: 70px * -0.5;
+  width: 70px;
+  height: 70px;
+  background-color: rgba(white, 0.7);
+  border-radius: 50%;
+  opacity: 0;
+}
