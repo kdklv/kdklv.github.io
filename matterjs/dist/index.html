@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Matterjs</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<main>
+  <div id="canvas__wrap">
+    <canvas id="canvas__wrap__physics"></canvas>
+  </div>
+  <div class="acceleration">
+    <div class="acceleration__detection">
+      <ul>
+        <li>加速度センサーの値</li>
+        <li id="acceleration__detection__x">x軸の角度</li>
+        <li id="acceleration__detection__y">y軸の角度</li>
+        <li id="acceleration__detection__z">z軸の角度</li>
+      </ul>
+    </div>
+  </div>
+  <div class="gyro">
+    <div class="gyro__detection">
+      <ul>
+        <li>ジャイロセンサーの値</li>
+        <li id="gyro__detection__x">x軸の角度</li>
+        <li id="gyro__detection__y">y軸の角度</li>
+        <li id="gyro__detection__z">z軸の角度  </li>
+      </ul>
+    </div>
+  </div>
+  <div class="mattar__gyro">
+    <div class="mattar__gyro__detection">
+      <ul>
+        <li>mattatrの重力数値</li>
+        <li id="mattar__gyrodetection__detection__x">x軸の重力</li>
+        <li id="mattar__gyrodetection__detection__y">y軸の重力</li>
+      </ul>
+    </div>
+  </div>
+</main>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.12.0/matter.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>

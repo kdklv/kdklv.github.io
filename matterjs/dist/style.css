@@ -1,0 +1,52 @@
+main {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+}
+
+#canvas__wrap {
+  width: 100vw;
+  height: 100vh;
+}
+#canvas__wrapphysics {
+  width: 100%;
+  height: 100%;
+}
+
+.acceleration {
+  position: absolute;
+  top: 30px;
+  left: 60px;
+  opacity: .5;
+}
+.acceleration__detection li {
+  margin: 10px;
+  font-size: 16px;
+  color: #fff;
+}
+
+.mattar__gyro {
+  position: absolute;
+  top: 270px;
+  left: 60px;
+  opacity: .5;
+}
+.mattar__gyro__detection li {
+  margin: 10px;
+  font-size: 16px;
+  color: #fff;
+}
+
+.gyro {
+  position: absolute;
+  top: 150px;
+  left: 60px;
+  opacity: .5;
+}
+.gyro__detection li {
+  margin: 10px;
+  font-size: 16px;
+  color: #fff;
+}
