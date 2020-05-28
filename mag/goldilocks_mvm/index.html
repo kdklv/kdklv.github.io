@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Goldielocks principle</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta itemprop="name" content="Goldielocks principle_bg">
+
+    <style>
+        body { 
+            margin: 0;
+            background-color: #000;
+        }
+        canvas {
+            display: block;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div style="z-index:9999;
+    color: white;
+    position: absolute;
+    text-align: left;
+    width: 80%;
+    font-family: 'runrun';
+    font-variation-settings: 'wght' var(--wght);
+    font-size: var(--size);
+    padding-left: 10%;
+    padding-top: var(--tpdn);
+    text-shadow: 2px 2px 5px #000;">
+    is named by analogy to the children's story given by "The Three Bears", in which a little girl named Goldilocks tastes three different bowls of porridge and finds that she prefers porridge that is neither too hot nor too cold, but has just the right temperature. The concept of "just the right amount" is easily understood and applied to a wide range of disciplines, including developmental psychology, biology, astronomy, economics and engineering. </div>
+    <canvas id="glcanvas" width="100vw" height="100vh"></canvas>
+
+
+    <libs/>
+    <script type="text/javascript" src="js/patch.js"></script>
+
+    <script>
+
+        function showError(errId, errMsg) {
+            alert('An error occured: ' + errId + ', ' + errMsg);
+        }
+
+        function patchInitialized() {
+        }
+
+        function patchFinishedLoading() {
+        }
+
+        document.addEventListener('DOMContentLoaded', function(event) {
+            CABLES.patch = new CABLES.Patch({
+                patch: CABLES.exportedPatch,
+                prefixAssetPath: '',
+                glCanvasId: 'glcanvas',
+                glCanvasResizeToWindow: true,
+                onError: showError,
+                onPatchLoaded: patchInitialized,
+                onFinishedLoading: patchFinishedLoading,
+            });
+        });
+    </script>
+</body>
+</html>
