@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>type.II</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <style>
+        body { 
+            margin: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        canvas {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <canvas id="glcanvas" width="100vw" height="100vh"></canvas>
+
+    <libs/>
+    <script type="text/javascript" src="js/patch.js"></script>
+     
+    
+    <script>
+               function showError(errId, errMsg) {
+            alert('An error occured: ' + errId + ', ' + errMsg);
+        }
+        function patchInitialized() {
+        }
+        function patchFinishedLoading() {
+        }
+
+        document.addEventListener('DOMContentLoaded', function(event) {
+            CABLES.patch = new CABLES.Patch({
+                patch: CABLES.exportedPatch,
+                prefixAssetPath: '',
+                glCanvasId: 'glcanvas',
+                glCanvasResizeToWindow: true,
+                onError: showError,
+                onPatchLoaded: patchInitialized,
+                onFinishedLoading: patchFinishedLoading,
+            });
+        });
+    </script>
+</body>
+</html>
