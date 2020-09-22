@@ -10,6 +10,7 @@
             background-color: #000;
             color: #fff;
             font-family: Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: rgba(0,0,0,0); 
         }
         canvas {
             display: block;
@@ -44,6 +45,13 @@
                 onFinishedLoading: patchFinishedLoading,
             });
         });
+
+        function preventBehavior(e) {
+            e.preventDefault(); 
+          };
+          
+          var canvas = document.getElementById('glcanvas');
+          canvas.addEventListener('touchmove', preventBehavior, false);
     </script>
 </body>
 </html>
